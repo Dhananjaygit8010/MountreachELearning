@@ -19,6 +19,7 @@ import {
   Layers,
   Laptop
 } from 'lucide-react';
+import RippleDistortion from '../components/RippleDistortion';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -298,9 +299,55 @@ class TaskRepository @Inject constructor(
                 <span>Stipend-Backed Internships</span>
               </div>
             </div>
+
+            {/* Interactive WebGL Ripple Distortion Showcase */}
+            <div className="pt-8 max-w-5xl mx-auto">
+              <div className="relative group rounded-3xl overflow-hidden border-2 border-slate-800/80 shadow-2xl bg-slate-950 p-2 sm:p-3 transition-all duration-500 hover:shadow-brand/20 hover:border-brand/50">
+                {/* Floating Studio Status Badge */}
+                <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-slate-950/85 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-700/80 text-white shadow-xl pointer-events-none">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-emerald-400">Interactive Studio</span>
+                  <span className="text-xs text-slate-400 hidden sm:inline">• Hover or click to distort & ripple</span>
+                </div>
+
+                {/* WebGL Canvas Container */}
+                <div className="w-full h-[280px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden relative">
+                  <RippleDistortion
+                    src="/hero.jpg"
+                    brushSize={150}
+                    strength={0.25}
+                    swirl={1.2}
+                    rings={4}
+                    grayscale={false}
+                    spread={5}
+                    fade={3}
+                    spacing={11}
+                    dispersion={0.015}
+                    glint={0.2}
+                    tint="#6366f1"
+                    tintAmount={0.15}
+                    highlightColor="#ffffff"
+                    trigger="hover"
+                    clickStrength={2.2}
+                    quality="high"
+                    enabled={true}
+                  />
+                </div>
+
+                {/* Floating Tech Stack Details */}
+                <div className="absolute bottom-5 right-5 z-20 hidden sm:flex items-center gap-2.5 bg-slate-950/85 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-800 text-xs font-medium text-slate-300 shadow-xl pointer-events-none">
+                  <span className="text-indigo-400 font-bold font-mono">OGL WebGL</span>
+                  <span>•</span>
+                  <span>Interactive Shaders</span>
+                  <span>•</span>
+                  <span className="text-emerald-400 font-bold">Fluid Distortion</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* Stats Counter Grid */}
       <section className="py-10 border-y border-slate-200/80 bg-white relative">
