@@ -20,6 +20,7 @@ import {
   Laptop
 } from 'lucide-react';
 import RippleDistortion from '../components/RippleDistortion';
+import GlareHover from '../components/CardHoverAnim';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -354,43 +355,49 @@ class TaskRepository @Inject constructor(
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {/* Stat Item 1 */}
-            <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
-              <div className="inline-flex p-3.5 bg-blue-100 text-brand rounded-2xl mb-4 group-hover:scale-110 transition-transform">
-                <Users className="h-7 w-7" />
+            <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
+              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-blue-100 text-brand rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <Users className="h-7 w-7" />
+                </div>
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                  {stats.students.toLocaleString()}+
+                </div>
+                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                  Engineering Graduates Trained
+                </div>
               </div>
-              <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
-                {stats.students.toLocaleString()}+
-              </div>
-              <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
-                Engineering Graduates Trained
-              </div>
-            </div>
+            </GlareHover>
 
             {/* Stat Item 2 */}
-            <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
-              <div className="inline-flex p-3.5 bg-indigo-100 text-indigo-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
-                <Building2 className="h-7 w-7" />
+            <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
+              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-indigo-100 text-indigo-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <Building2 className="h-7 w-7" />
+                </div>
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                  {stats.partners}+
+                </div>
+                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                  Hiring Corporate Partners
+                </div>
               </div>
-              <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
-                {stats.partners}+
-              </div>
-              <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
-                Hiring Corporate Partners
-              </div>
-            </div>
+            </GlareHover>
 
             {/* Stat Item 3 */}
-            <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
-              <div className="inline-flex p-3.5 bg-emerald-100 text-emerald-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
-                <Award className="h-7 w-7" />
+            <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
+              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-emerald-100 text-emerald-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+                  <Award className="h-7 w-7" />
+                </div>
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                  {stats.placements}%
+                </div>
+                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                  Placement & Viva Success Rate
+                </div>
               </div>
-              <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
-                {stats.placements}%
-              </div>
-              <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
-                Placement & Viva Success Rate
-              </div>
-            </div>
+            </GlareHover>
           </div>
         </div>
       </section>
@@ -628,32 +635,39 @@ class TaskRepository @Inject constructor(
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, idx) => (
-              <div
+              <GlareHover
                 key={idx}
-                className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6"
+                glareColor="#ffffff"
+                glareOpacity={0.3}
+                glareAngle={-35}
+                glareSize={280}
+                transitionDuration={700}
+                className="rounded-3xl h-full"
               >
-                <div className="space-y-4">
-                  <div className="flex gap-1 text-amber-400">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-current" />
-                    ))}
+                <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6 h-full">
+                  <div className="space-y-4">
+                    <div className="flex gap-1 text-amber-400">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-slate-600 text-sm font-medium leading-relaxed italic">
+                      "{t.comment}"
+                    </p>
                   </div>
-                  <p className="text-slate-600 text-sm font-medium leading-relaxed italic">
-                    "{t.comment}"
-                  </p>
-                </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-brand to-brand-light text-white font-black text-sm flex items-center justify-center shadow-sm">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{t.name}</h4>
-                    <p className="text-xs text-brand font-bold">{t.role}</p>
-                    <p className="text-[10px] text-slate-400 font-semibold">{t.college}</p>
+                  <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-brand to-brand-light text-white font-black text-sm flex items-center justify-center shadow-sm">
+                      {t.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{t.name}</h4>
+                      <p className="text-xs text-brand font-bold">{t.role}</p>
+                      <p className="text-[10px] text-slate-400 font-semibold">{t.college}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </GlareHover>
             ))}
           </div>
         </div>

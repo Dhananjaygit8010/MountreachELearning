@@ -16,6 +16,8 @@ import {
   Clock,
   Coins
 } from 'lucide-react';
+import GlareHover from '../components/CardHoverAnim';
+
 
 const InternshipHub = () => {
   const navigate = useNavigate();
@@ -149,109 +151,118 @@ const InternshipHub = () => {
             {filteredInternships.map((intern) => {
               const applied = hasApplied(intern._id);
               return (
-                <div
+                <GlareHover
                   key={intern._id}
-                  className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+                  glareColor="#ffffff"
+                  glareOpacity={0.25}
+                  glareAngle={-45}
+                  glareSize={280}
+                  transitionDuration={700}
+                  className="rounded-3xl h-full"
                 >
-                  <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
+                  <div
+                    className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-full"
+                  >
+                    <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
 
-                  {/* Top Meta */}
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] uppercase font-black tracking-wider bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
-                          {intern.duration}
-                        </span>
-                        {intern.isDummy && (
-                          <span className="text-[10px] uppercase font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md shadow-xs">
-                            Demo
+                    {/* Top Meta */}
+                    <div className="space-y-4 relative z-10">
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] uppercase font-black tracking-wider bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
+                            {intern.duration}
+                          </span>
+                          {intern.isDummy && (
+                            <span className="text-[10px] uppercase font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md shadow-xs">
+                              Demo
+                            </span>
+                          )}
+                        </div>
+                        {intern.isoCertified && (
+                          <span className="flex items-center gap-1 text-[10px] uppercase font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-lg">
+                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+                            ISO 9001:2015
                           </span>
                         )}
                       </div>
-                      {intern.isoCertified && (
-                        <span className="flex items-center gap-1 text-[10px] uppercase font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-lg">
-                          <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-                          ISO 9001:2015
+
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight group-hover:text-brand transition-colors">
+                          {intern.title}
+                        </h3>
+                        <p className="text-slate-400 text-xs font-bold uppercase mt-1 tracking-wider flex items-center gap-1.5">
+                          <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                          {intern.company}
+                        </p>
+                      </div>
+
+                      <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                        {intern.description}
+                      </p>
+
+                      {/* Skills Required */}
+                      <div className="space-y-1.5 pt-2">
+                        <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                          Skills Required
                         </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {intern.skillsRequired?.map((skill, idx) => (
+                            <span
+                              key={idx}
+                              className="bg-slate-50 text-slate-700 text-xs px-3 py-1 rounded-lg border border-slate-200 font-bold"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Commercial Projects */}
+                      {intern.projects && intern.projects.length > 0 && (
+                        <div className="space-y-1.5 pt-2">
+                          <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                            Key Sprint Deliverables
+                          </span>
+                          <ul className="text-xs text-slate-600 font-semibold space-y-1.5">
+                            {intern.projects.map((proj, idx) => (
+                              <li key={idx} className="flex items-center gap-2">
+                                <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
+                                <span>{proj}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       )}
                     </div>
 
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight group-hover:text-brand transition-colors">
-                        {intern.title}
-                      </h3>
-                      <p className="text-slate-400 text-xs font-bold uppercase mt-1 tracking-wider flex items-center gap-1.5">
-                        <Building2 className="h-3.5 w-3.5 text-slate-400" />
-                        {intern.company}
-                      </p>
-                    </div>
-
-                    <p className="text-slate-600 text-sm font-medium leading-relaxed">
-                      {intern.description}
-                    </p>
-
-                    {/* Skills Required */}
-                    <div className="space-y-1.5 pt-2">
-                      <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
-                        Skills Required
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {intern.skillsRequired?.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-slate-50 text-slate-700 text-xs px-3 py-1 rounded-lg border border-slate-200 font-bold"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Commercial Projects */}
-                    {intern.projects && intern.projects.length > 0 && (
-                      <div className="space-y-1.5 pt-2">
-                        <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
-                          Key Sprint Deliverables
+                    {/* Actions Footer */}
+                    <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 relative z-10">
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
+                          Monthly Stipend
                         </span>
-                        <ul className="text-xs text-slate-600 font-semibold space-y-1.5">
-                          {intern.projects.map((proj, idx) => (
-                            <li key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
-                              <span>{proj}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <span className="text-base sm:text-lg font-black text-slate-900">
+                          {intern.stipend}
+                        </span>
                       </div>
-                    )}
-                  </div>
 
-                  {/* Actions Footer */}
-                  <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 relative z-10">
-                    <div>
-                      <span className="block text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
-                        Monthly Stipend
-                      </span>
-                      <span className="text-base sm:text-lg font-black text-slate-900">
-                        {intern.stipend}
-                      </span>
+                      {applied ? (
+                        <span className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xs">
+                          <UserCheck className="h-4 w-4" />
+                          Application Submitted
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleApplyClick(intern)}
+                          className="bg-gradient-to-r from-brand to-indigo-600 hover:from-brand-dark hover:to-brand text-white font-extrabold px-6 py-3.5 rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-brand/20 hover:shadow-lg transition-all"
+                        >
+                          <span>Apply Now</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </button>
+                      )}
                     </div>
-
-                    {applied ? (
-                      <span className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xs">
-                        <UserCheck className="h-4 w-4" />
-                        Application Submitted
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => handleApplyClick(intern)}
-                        className="bg-gradient-to-r from-brand to-indigo-600 hover:from-brand-dark hover:to-brand text-white font-extrabold px-6 py-3.5 rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-brand/20 hover:shadow-lg transition-all"
-                      >
-                        <span>Apply Now</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    )}
                   </div>
-                </div>
+                </GlareHover>
               );
             })}
           </div>

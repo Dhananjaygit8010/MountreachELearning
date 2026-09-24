@@ -15,6 +15,8 @@ import {
   Filter,
   CheckCircle2
 } from 'lucide-react';
+import GlareHover from '../components/CardHoverAnim';
+
 
 const CourseCatalog = () => {
   const navigate = useNavigate();
@@ -243,89 +245,98 @@ const CourseCatalog = () => {
             {filteredCourses.map((course) => {
               const theme = getCategoryTheme(course.category);
               return (
-                <div
+                <GlareHover
                   key={course._id}
-                  onClick={() => navigate(`/courses/${course._id}`)}
-                  className="group bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between"
+                  glareColor="#ffffff"
+                  glareOpacity={0.25}
+                  glareAngle={-35}
+                  glareSize={280}
+                  transitionDuration={750}
+                  className="rounded-3xl h-full"
                 >
-                  {/* Card Visual Header */}
                   <div
-                    className={`relative h-48 bg-gradient-to-br ${theme.bg} p-6 flex flex-col justify-between text-white overflow-hidden`}
+                    onClick={() => navigate(`/courses/${course._id}`)}
+                    className="group bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between h-full"
                   >
-                    <div className="absolute inset-0 bg-grid-pattern-dark opacity-15 pointer-events-none" />
+                    {/* Card Visual Header */}
+                    <div
+                      className={`relative h-48 bg-gradient-to-br ${theme.bg} p-6 flex flex-col justify-between text-white overflow-hidden`}
+                    >
+                      <div className="absolute inset-0 bg-grid-pattern-dark opacity-15 pointer-events-none" />
 
-                    <div className="flex justify-between items-start relative z-10">
-                      <span
-                        className={`text-[10px] uppercase font-black tracking-wider px-2.5 py-1 rounded-lg border backdrop-blur-md ${theme.badgeBg}`}
-                      >
-                        {course.category}
-                      </span>
-                      <div className="flex items-center gap-1.5">
-                        {course.isDummy && (
-                          <span className="text-[10px] uppercase font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md shadow-xs">
-                            Demo
-                          </span>
-                        )}
-                        <span className="flex items-center gap-1 text-[10px] uppercase font-bold bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/20">
-                          <ShieldCheck className="h-3 w-3" />
-                          ISO Verified
+                      <div className="flex justify-between items-start relative z-10">
+                        <span
+                          className={`text-[10px] uppercase font-black tracking-wider px-2.5 py-1 rounded-lg border backdrop-blur-md ${theme.badgeBg}`}
+                        >
+                          {course.category}
                         </span>
-                      </div>
-                    </div>
-
-                    <div className="relative z-10">
-                      <h3 className="text-xl font-black tracking-tight leading-snug group-hover:text-cyan-200 transition-colors duration-200 drop-shadow-sm">
-                        {course.title}
-                      </h3>
-                      {course.level && (
-                        <span className="text-[11px] font-semibold text-white/80 block mt-1">
-                          Level: {course.level}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Card Body */}
-                  <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-3">
-                      {course.description}
-                    </p>
-
-                    {/* Meta info chips */}
-                    <div className="space-y-3 pt-3 border-t border-slate-100">
-                      <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="h-4 w-4 text-brand" />
-                          {course.duration}
-                        </span>
-                        <span className="flex items-center gap-1.5 text-slate-600">
-                          <Layers className="h-4 w-4 text-indigo-500" />
-                          {course.projects?.length || 3} Projects
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-1">
-                        <div>
-                          <span className="text-[10px] font-extrabold uppercase text-slate-400 block tracking-wider">
-                            Tuition Fee
-                          </span>
-                          <span className="text-xl font-black text-slate-900">
-                            ₹{course.price.toLocaleString()}
+                        <div className="flex items-center gap-1.5">
+                          {course.isDummy && (
+                            <span className="text-[10px] uppercase font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md shadow-xs">
+                              Demo
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1 text-[10px] uppercase font-bold bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/20">
+                            <ShieldCheck className="h-3 w-3" />
+                            ISO Verified
                           </span>
                         </div>
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">
-                          Lifetime Valid
-                        </span>
+                      </div>
+
+                      <div className="relative z-10">
+                        <h3 className="text-xl font-black tracking-tight leading-snug group-hover:text-cyan-200 transition-colors duration-200 drop-shadow-sm">
+                          {course.title}
+                        </h3>
+                        {course.level && (
+                          <span className="text-[11px] font-semibold text-white/80 block mt-1">
+                            Level: {course.level}
+                          </span>
+                        )}
                       </div>
                     </div>
 
-                    {/* Action Button */}
-                    <button className="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-brand hover:text-white border border-slate-200 hover:border-brand text-slate-800 font-extrabold py-3.5 rounded-2xl text-xs transition-all duration-200 group-hover:shadow-md">
-                      <span>View Syllabus & Enroll</span>
-                      <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    {/* Card Body */}
+                    <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-3">
+                        {course.description}
+                      </p>
+
+                      {/* Meta info chips */}
+                      <div className="space-y-3 pt-3 border-t border-slate-100">
+                        <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="h-4 w-4 text-brand" />
+                            {course.duration}
+                          </span>
+                          <span className="flex items-center gap-1.5 text-slate-600">
+                            <Layers className="h-4 w-4 text-indigo-500" />
+                            {course.projects?.length || 3} Projects
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-1">
+                          <div>
+                            <span className="text-[10px] font-extrabold uppercase text-slate-400 block tracking-wider">
+                              Tuition Fee
+                            </span>
+                            <span className="text-xl font-black text-slate-900">
+                              ₹{course.price.toLocaleString()}
+                            </span>
+                          </div>
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">
+                            Lifetime Valid
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <button className="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-brand hover:text-white border border-slate-200 hover:border-brand text-slate-800 font-extrabold py-3.5 rounded-2xl text-xs transition-all duration-200 group-hover:shadow-md">
+                        <span>View Syllabus & Enroll</span>
+                        <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </GlareHover>
               );
             })}
           </div>

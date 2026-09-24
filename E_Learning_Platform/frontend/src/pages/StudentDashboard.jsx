@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import api from '../utils/api';
 import { LayoutDashboard, BookOpen, Award, Settings, User, GraduationCap, Building2, MapPin, CheckCircle2, Lock, Unlock, Download, Save, Printer, X, Shield } from 'lucide-react';
+import GlareHover from '../components/CardHoverAnim';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -247,56 +248,66 @@ const StudentDashboard = () => {
                       {user.enrolledCourses.map((course) => {
                         const progress = getProgressVal(course._id || course);
                         return (
-                          <div key={course._id || course} className="p-5 border border-slate-200 rounded-2xl flex flex-col justify-between shadow-sm space-y-4">
-                            <div>
-                              <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-brand-accent text-brand rounded">
-                                {course.category}
-                              </span>
-                              <h4 className="font-extrabold text-slate-900 text-base mt-2">{course.title}</h4>
-                              <p className="text-xs text-slate-500 mt-1 line-clamp-2">{course.description}</p>
-                            </div>
-
-                            {/* Progress bar info */}
-                            <div className="space-y-1.5">
-                              <div className="flex justify-between items-center text-xs font-bold text-slate-600">
-                                <span>Program Coursework</span>
-                                <span className={progress === 100 ? 'text-emerald-600' : 'text-brand'}>
-                                  {progress}% Complete
+                          <GlareHover
+                            key={course._id || course}
+                            glareColor="#ffffff"
+                            glareOpacity={0.25}
+                            glareAngle={-35}
+                            glareSize={260}
+                            transitionDuration={700}
+                            className="rounded-2xl h-full"
+                          >
+                            <div className="p-5 border border-slate-200 rounded-2xl flex flex-col justify-between shadow-sm space-y-4 bg-white h-full">
+                              <div>
+                                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 bg-brand-accent text-brand rounded">
+                                  {course.category}
                                 </span>
+                                <h4 className="font-extrabold text-slate-900 text-base mt-2">{course.title}</h4>
+                                <p className="text-xs text-slate-500 mt-1 line-clamp-2">{course.description}</p>
                               </div>
-                              <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div
-                                  className={`h-2 rounded-full transition-all duration-300 ${
-                                    progress === 100 ? 'bg-emerald-500' : 'bg-brand'
-                                  }`}
-                                  style={{ width: `${progress}%` }}
-                                />
-                              </div>
-                            </div>
 
-                            {/* Button controls */}
-                            <div className="flex gap-2">
-                              {progress === 100 ? (
-                                <button
-                                  onClick={() => {
-                                    setSelectedCertificate(course);
-                                    setActivePane('certificates');
-                                  }}
-                                  className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1"
-                                >
-                                  <Award className="h-4 w-4" />
-                                  View Verified Certificate
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() => handleSimulateProgress(course._id || course)}
-                                  className="w-full bg-brand hover:bg-brand-dark text-white text-xs font-bold py-2.5 rounded-xl transition-all duration-200"
-                                >
-                                  Study & Code (+25%)
-                                </button>
-                              )}
+                              {/* Progress bar info */}
+                              <div className="space-y-1.5">
+                                <div className="flex justify-between items-center text-xs font-bold text-slate-600">
+                                  <span>Program Coursework</span>
+                                  <span className={progress === 100 ? 'text-emerald-600' : 'text-brand'}>
+                                    {progress}% Complete
+                                  </span>
+                                </div>
+                                <div className="w-full bg-slate-100 rounded-full h-2">
+                                  <div
+                                    className={`h-2 rounded-full transition-all duration-300 ${
+                                      progress === 100 ? 'bg-emerald-500' : 'bg-brand'
+                                    }`}
+                                    style={{ width: `${progress}%` }}
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Button controls */}
+                              <div className="flex gap-2">
+                                {progress === 100 ? (
+                                  <button
+                                    onClick={() => {
+                                      setSelectedCertificate(course);
+                                      setActivePane('certificates');
+                                    }}
+                                    className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1"
+                                  >
+                                    <Award className="h-4 w-4" />
+                                    View Verified Certificate
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => handleSimulateProgress(course._id || course)}
+                                    className="w-full bg-brand hover:bg-brand-dark text-white text-xs font-bold py-2.5 rounded-xl transition-all duration-200"
+                                  >
+                                    Study & Code (+25%)
+                                  </button>
+                                )}
+                              </div>
                             </div>
-                          </div>
+                          </GlareHover>
                         );
                       })}
                     </div>
