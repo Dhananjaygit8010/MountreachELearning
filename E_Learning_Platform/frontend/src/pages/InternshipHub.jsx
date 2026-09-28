@@ -75,18 +75,18 @@ const InternshipHub = () => {
   });
 
   return (
-    <div className="bg-slate-50/50 min-h-screen py-16">
+    <div className="bg-slate-50/50 dark:bg-[#0b0f19] min-h-screen py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-xs">
-            <Briefcase className="h-3.5 w-3.5 text-indigo-600" />
+          <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/40 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-xs">
+            <Briefcase className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
             <span>Industrial Experience Hub</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
             Corporate Internship Openings
           </h1>
-          <p className="text-slate-600 font-medium text-base">
+          <p className="text-slate-600 dark:text-slate-300 font-medium text-base">
             Work directly on production sprints with performance stipends and earn ISO 9001:2015 verified industrial experience credentials.
           </p>
         </div>
@@ -94,18 +94,18 @@ const InternshipHub = () => {
         {/* Search Bar */}
         <div className="max-w-2xl mx-auto mb-12">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
               placeholder="Search internships by role or skill (e.g. React, Python, Kotlin, Cloud)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-10 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand shadow-sm transition-all"
+              className="w-full pl-12 pr-10 py-3.5 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand shadow-sm transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-full"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 rounded-full"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -119,7 +119,7 @@ const InternshipHub = () => {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-3xl border border-slate-200 p-8 space-y-6 shadow-sm"
+                className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-6 shadow-sm"
               >
                 <div className="h-6 w-1/3 rounded skeleton-shimmer" />
                 <div className="h-8 w-2/3 rounded skeleton-shimmer" />
@@ -129,12 +129,12 @@ const InternshipHub = () => {
             ))}
           </div>
         ) : filteredInternships.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 max-w-md mx-auto shadow-sm space-y-3">
-            <div className="h-14 w-14 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto">
+          <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-md mx-auto shadow-sm space-y-3">
+            <div className="h-14 w-14 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-full flex items-center justify-center mx-auto">
               <Briefcase className="h-7 w-7" />
             </div>
-            <h3 className="font-extrabold text-slate-900 text-lg">No internships found</h3>
-            <p className="text-slate-500 text-xs font-medium">
+            <h3 className="font-extrabold text-slate-900 dark:text-white text-lg">No internships found</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">
               Try searching for different keywords or reset your search.
             </p>
             {searchQuery && (
@@ -161,7 +161,7 @@ const InternshipHub = () => {
                   className="rounded-3xl h-full"
                 >
                   <div
-                    className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-full"
+                    className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group h-full"
                   >
                     <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
 
@@ -169,7 +169,7 @@ const InternshipHub = () => {
                     <div className="space-y-4 relative z-10">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] uppercase font-black tracking-wider bg-slate-100 text-slate-700 px-3 py-1 rounded-lg">
+                          <span className="text-[10px] uppercase font-black tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1 rounded-lg">
                             {intern.duration}
                           </span>
                           {intern.isDummy && (
@@ -179,7 +179,7 @@ const InternshipHub = () => {
                           )}
                         </div>
                         {intern.isoCertified && (
-                          <span className="flex items-center gap-1 text-[10px] uppercase font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-lg">
+                          <span className="flex items-center gap-1 text-[10px] uppercase font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-800/40 px-3 py-1 rounded-lg">
                             <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
                             ISO 9001:2015
                           </span>
@@ -187,29 +187,29 @@ const InternshipHub = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight group-hover:text-brand transition-colors">
+                        <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-brand dark:group-hover:text-blue-400 transition-colors">
                           {intern.title}
                         </h3>
-                        <p className="text-slate-400 text-xs font-bold uppercase mt-1 tracking-wider flex items-center gap-1.5">
-                          <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                        <p className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase mt-1 tracking-wider flex items-center gap-1.5">
+                          <Building2 className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                           {intern.company}
                         </p>
                       </div>
 
-                      <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                      <p className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-relaxed">
                         {intern.description}
                       </p>
 
                       {/* Skills Required */}
                       <div className="space-y-1.5 pt-2">
-                        <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                        <span className="block text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                           Skills Required
                         </span>
                         <div className="flex flex-wrap gap-1.5">
                           {intern.skillsRequired?.map((skill, idx) => (
                             <span
                               key={idx}
-                              className="bg-slate-50 text-slate-700 text-xs px-3 py-1 rounded-lg border border-slate-200 font-bold"
+                              className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 font-bold"
                             >
                               {skill}
                             </span>
@@ -220,10 +220,10 @@ const InternshipHub = () => {
                       {/* Commercial Projects */}
                       {intern.projects && intern.projects.length > 0 && (
                         <div className="space-y-1.5 pt-2">
-                          <span className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                          <span className="block text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                             Key Sprint Deliverables
                           </span>
-                          <ul className="text-xs text-slate-600 font-semibold space-y-1.5">
+                          <ul className="text-xs text-slate-600 dark:text-slate-300 font-semibold space-y-1.5">
                             {intern.projects.map((proj, idx) => (
                               <li key={idx} className="flex items-center gap-2">
                                 <CheckCircle className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
@@ -236,18 +236,18 @@ const InternshipHub = () => {
                     </div>
 
                     {/* Actions Footer */}
-                    <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 relative z-10">
+                    <div className="mt-8 pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-4 relative z-10">
                       <div>
-                        <span className="block text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
+                        <span className="block text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-wider">
                           Monthly Stipend
                         </span>
-                        <span className="text-base sm:text-lg font-black text-slate-900">
+                        <span className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
                           {intern.stipend}
                         </span>
                       </div>
 
                       {applied ? (
-                        <span className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xs">
+                        <span className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-400 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shadow-xs">
                           <UserCheck className="h-4 w-4" />
                           Application Submitted
                         </span>

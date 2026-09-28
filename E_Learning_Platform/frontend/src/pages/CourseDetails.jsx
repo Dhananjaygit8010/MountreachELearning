@@ -77,7 +77,7 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="bg-white dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 min-h-screen pb-20 transition-colors duration-300">
       {/* Course Banner Header */}
       <section className="bg-slate-900 text-white relative overflow-hidden py-16 sm:py-24">
         <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
@@ -154,13 +154,13 @@ const CourseDetails = () => {
           <div className="lg:col-span-8 space-y-8">
             
             {/* Tabs Buttons */}
-            <div className="flex border-b border-slate-200">
+            <div className="flex border-b border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setActiveTab('syllabus')}
                 className={`pb-4 px-6 font-bold text-sm sm:text-base border-b-2 transition-all duration-200 ${
                   activeTab === 'syllabus'
-                    ? 'border-brand text-brand'
-                    : 'border-transparent text-slate-500 hover:text-brand'
+                    ? 'border-brand dark:border-blue-400 text-brand dark:text-blue-400'
+                    : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
                 }`}
               >
                 Syllabus & Modules
@@ -169,8 +169,8 @@ const CourseDetails = () => {
                 onClick={() => setActiveTab('projects')}
                 className={`pb-4 px-6 font-bold text-sm sm:text-base border-b-2 transition-all duration-200 ${
                   activeTab === 'projects'
-                    ? 'border-brand text-brand'
-                    : 'border-transparent text-slate-500 hover:text-brand'
+                    ? 'border-brand dark:border-blue-400 text-brand dark:text-blue-400'
+                    : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
                 }`}
               >
                 Included Projects
@@ -179,8 +179,8 @@ const CourseDetails = () => {
                 onClick={() => setActiveTab('certification')}
                 className={`pb-4 px-6 font-bold text-sm sm:text-base border-b-2 transition-all duration-200 ${
                   activeTab === 'certification'
-                    ? 'border-brand text-brand'
-                    : 'border-transparent text-slate-500 hover:text-brand'
+                    ? 'border-brand dark:border-blue-400 text-brand dark:text-blue-400'
+                    : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
                 }`}
               >
                 Accreditation Details
@@ -188,21 +188,21 @@ const CourseDetails = () => {
             </div>
 
             {/* Dynamic Content view pane */}
-            <div className="bg-slate-50/50 rounded-3xl p-6 sm:p-8 border border-slate-100 min-h-[300px]">
+            <div className="bg-slate-50/50 dark:bg-slate-900/60 rounded-3xl p-6 sm:p-8 border border-slate-100 dark:border-slate-800 min-h-[300px]">
               
               {activeTab === 'syllabus' && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">Syllabus Breakdown</h3>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Syllabus Breakdown</h3>
                   <div className="space-y-4">
                     {course.syllabus.map((module, idx) => (
-                      <div key={idx} className="flex gap-4 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm items-start">
-                        <div className="h-8 w-8 bg-brand-accent text-brand rounded-lg font-bold flex items-center justify-center text-sm flex-shrink-0">
+                      <div key={idx} className="flex gap-4 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm items-start">
+                        <div className="h-8 w-8 bg-brand-accent dark:bg-blue-950/80 text-brand dark:text-blue-400 rounded-lg font-bold flex items-center justify-center text-sm flex-shrink-0">
                           {idx + 1}
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-800 text-sm sm:text-base">{module.split(':')[0]}</h4>
+                          <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm sm:text-base">{module.split(':')[0]}</h4>
                           {module.includes(':') && (
-                            <p className="text-xs sm:text-sm text-slate-500 font-semibold mt-0.5">{module.split(':')[1]}</p>
+                            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold mt-0.5">{module.split(':')[1]}</p>
                           )}
                         </div>
                       </div>
@@ -213,18 +213,18 @@ const CourseDetails = () => {
 
               {activeTab === 'projects' && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">Core Commercial Projects</h3>
-                  <p className="text-slate-500 text-sm font-semibold">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Core Commercial Projects</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold">
                     Mountreach Solution certifies students only after they demonstrate complete execution of these live assignments.
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     {course.projects.map((proj, idx) => (
-                      <div key={idx} className="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
-                        <div className="h-10 w-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <div key={idx} className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 flex flex-col justify-between">
+                        <div className="h-10 w-10 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Play className="h-5 w-5 fill-current" />
                         </div>
-                        <h4 className="font-bold text-slate-800 text-sm sm:text-base">{proj}</h4>
-                        <span className="text-[10px] text-brand bg-brand-accent px-2 py-0.5 rounded font-extrabold inline-block w-max uppercase tracking-wider">
+                        <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm sm:text-base">{proj}</h4>
+                        <span className="text-[10px] text-brand dark:text-blue-400 bg-brand-accent dark:bg-blue-950/80 px-2 py-0.5 rounded font-extrabold inline-block w-max uppercase tracking-wider">
                           Review Required
                         </span>
                       </div>
@@ -235,25 +235,25 @@ const CourseDetails = () => {
 
               {activeTab === 'certification' && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">Certification Credential Details</h3>
-                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Certification Credential Details</h3>
+                  <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 space-y-4">
                     <div className="flex gap-4 items-start">
                       <Award className="h-8 w-8 text-yellow-500 flex-shrink-0" />
                       <div>
-                        <h4 className="font-bold text-slate-800 text-base">Mountreach Solution Stamp</h4>
-                        <p className="text-slate-600 text-sm leading-relaxed mt-1 font-medium">
+                        <h4 className="font-bold text-slate-800 dark:text-slate-100 text-base">Mountreach Solution Stamp</h4>
+                        <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mt-1 font-medium">
                           {course.certificationDetails}
                         </p>
                       </div>
                     </div>
 
-                    <div className="h-px bg-slate-200 my-4" />
+                    <div className="h-px bg-slate-200 dark:bg-slate-800 my-4" />
 
                     <div className="flex gap-4 items-start">
-                      <ShieldCheck className="h-8 w-8 text-brand-light flex-shrink-0" />
+                      <ShieldCheck className="h-8 w-8 text-brand-light dark:text-blue-400 flex-shrink-0" />
                       <div>
-                        <h4 className="font-bold text-slate-800 text-base">Verifiable Digital Registration</h4>
-                        <p className="text-slate-600 text-sm leading-relaxed mt-1 font-medium">
+                        <h4 className="font-bold text-slate-800 dark:text-slate-100 text-base">Verifiable Digital Registration</h4>
+                        <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mt-1 font-medium">
                           Upon payment authorization and project completion, your details are synchronized to the Mountreach Solution database. A secure QR code is embedded on the certificate for academic verification.
                         </p>
                       </div>
@@ -265,6 +265,7 @@ const CourseDetails = () => {
             </div>
 
           </div>
+
 
           {/* Sidebar Guidelines Column */}
           <div className="lg:col-span-4 space-y-6">

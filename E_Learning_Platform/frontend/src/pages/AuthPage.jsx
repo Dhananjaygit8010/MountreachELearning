@@ -96,29 +96,29 @@ const AuthPage = ({ defaultIsLogin = true }) => {
   };
 
   return (
-    <div className="bg-slate-50 min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="bg-slate-50 dark:bg-[#0b0f19] min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
       <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
       
       {/* Outer Card container */}
-      <div className="bg-white max-w-md w-full rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 space-y-6 relative transition-all duration-300">
+      <div className="bg-white dark:bg-slate-900 max-w-md w-full rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6 relative transition-all duration-300">
         
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="mx-auto flex justify-center text-brand">
+          <div className="mx-auto flex justify-center text-brand dark:text-blue-400">
             <div className="bg-brand text-white p-2.5 rounded-xl shadow">
               <GraduationCap className="h-7 w-7" />
             </div>
           </div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
             {isLogin ? 'Student Portal Login' : 'Register Student Account'}
           </h2>
-          <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
             Mountreach Solution Private Limited
           </p>
         </div>
 
         {/* Toggle switch tab */}
-        <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
           <button
             type="button"
             onClick={() => {
@@ -127,7 +127,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
               setErrors({});
             }}
             className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 ${
-              isLogin ? 'bg-white text-brand shadow-sm' : 'text-slate-600 hover:text-brand'
+              isLogin ? 'bg-white dark:bg-slate-700 text-brand dark:text-blue-400 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400'
             }`}
           >
             <LogIn className="h-4 w-4" />
@@ -141,7 +141,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
               setErrors({});
             }}
             className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 ${
-              !isLogin ? 'bg-white text-brand shadow-sm' : 'text-slate-600 hover:text-brand'
+              !isLogin ? 'bg-white dark:bg-slate-700 text-brand dark:text-blue-400 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400'
             }`}
           >
             <UserPlus className="h-4 w-4" />
@@ -157,7 +157,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
             <>
               {/* Name */}
               <div>
-                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                   Full Name
                 </label>
                 <input
@@ -166,8 +166,8 @@ const AuthPage = ({ defaultIsLogin = true }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   disabled={submitting}
-                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                    errors.name ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 ${
+                    errors.name ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                   }`}
                 />
                 {errors.name && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.name}</p>}
@@ -175,7 +175,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
 
               {/* College */}
               <div>
-                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                   College / Institution Name
                 </label>
                 <input
@@ -184,8 +184,8 @@ const AuthPage = ({ defaultIsLogin = true }) => {
                   value={college}
                   onChange={(e) => setCollege(e.target.value)}
                   disabled={submitting}
-                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                    errors.college ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 ${
+                    errors.college ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                   }`}
                 />
                 {errors.college && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.college}</p>}
@@ -193,7 +193,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
 
               {/* Branch */}
               <div>
-                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                   Branch / Diploma Specialization
                 </label>
                 <input
@@ -202,8 +202,8 @@ const AuthPage = ({ defaultIsLogin = true }) => {
                   value={branch}
                   onChange={(e) => setBranch(e.target.value)}
                   disabled={submitting}
-                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                    errors.branch ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 ${
+                    errors.branch ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                   }`}
                 />
                 {errors.branch && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.branch}</p>}
@@ -213,7 +213,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
 
           {/* Email */}
           <div>
-            <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
               Email Address
             </label>
             <input
@@ -222,8 +222,8 @@ const AuthPage = ({ defaultIsLogin = true }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={submitting}
-              className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                errors.email ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+              className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 ${
+                errors.email ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
               }`}
             />
             {errors.email && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.email}</p>}
@@ -231,7 +231,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
 
           {/* Password */}
           <div>
-            <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
               Password
             </label>
             <div className="relative">
@@ -241,14 +241,14 @@ const AuthPage = ({ defaultIsLogin = true }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={submitting}
-                className={`w-full p-3 pr-10 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                  errors.password ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                className={`w-full p-3 pr-10 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 ${
+                  errors.password ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -276,10 +276,10 @@ const AuthPage = ({ defaultIsLogin = true }) => {
 
           {/* Admin Credentials Helper */}
           {isLogin && (
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-[11px] text-slate-500 font-bold">
-                <span className="flex items-center gap-1 text-slate-700">
-                  <Shield className="h-3.5 w-3.5 text-indigo-600" />
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+              <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-bold">
+                <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
+                  <Shield className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
                   Administrator Access
                 </span>
                 <button
@@ -289,12 +289,12 @@ const AuthPage = ({ defaultIsLogin = true }) => {
                     setPassword('Admin@123');
                     setErrors({});
                   }}
-                  className="text-indigo-600 hover:text-indigo-700 font-extrabold hover:underline"
+                  className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-extrabold hover:underline"
                 >
                   ⚡ Auto-Fill Admin Credentials
                 </button>
               </div>
-              <div className="bg-indigo-50/60 border border-indigo-100 rounded-xl p-2.5 text-[11px] text-indigo-950 font-mono flex items-center justify-between">
+              <div className="bg-indigo-50/60 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/60 rounded-xl p-2.5 text-[11px] text-indigo-950 dark:text-indigo-200 font-mono flex items-center justify-between">
                 <span>User: <strong>Admin@gmail.com</strong></span>
                 <span>Pass: <strong>Admin@123</strong></span>
               </div>

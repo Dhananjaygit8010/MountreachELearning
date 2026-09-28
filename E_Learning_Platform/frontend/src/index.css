@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
@@ -13,6 +15,12 @@
 /* Base styling */
 html {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark {
+  background-color: #0b0f19;
+  color: #f8fafc;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -29,21 +37,40 @@ h1, h2, h3, h4, h5, h6 {
   background: #f1f5f9;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
 /* Glassmorphism Classes */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.dark .glass-nav {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(30, 41, 59, 0.8);
 }
 
 .glass-card {
@@ -54,12 +81,21 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+}
+
 .glass-dark {
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 
 /* Glow Shadows */
 .glow-brand {

@@ -233,9 +233,9 @@ class TaskRepository @Inject constructor(
   ];
 
   return (
-    <div className="bg-white min-h-screen overflow-hidden">
+    <div className="bg-white dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 min-h-screen overflow-hidden transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative pt-12 pb-20 sm:pb-32 overflow-hidden bg-gradient-to-b from-blue-50/70 via-slate-50/30 to-white">
+      <section className="relative pt-12 pb-20 sm:pb-32 overflow-hidden bg-gradient-to-b from-blue-50/70 via-slate-50/30 to-white dark:from-slate-900/60 dark:via-slate-900/30 dark:to-[#0b0f19]">
         {/* Glowing Background Radial Orbs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] pointer-events-none">
           <div className="absolute top-12 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse-glow" />
@@ -246,16 +246,16 @@ class TaskRepository @Inject constructor(
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-8">
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md border border-brand/20 text-brand px-5 py-2 rounded-full text-xs sm:text-sm font-extrabold shadow-sm shadow-brand/10 hover:scale-105 transition-all">
-              <span className="flex h-2 w-2 rounded-full bg-brand animate-ping" />
-              <ShieldCheck className="h-4 w-4 text-brand-light" />
+            <div className="inline-flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-brand/20 dark:border-blue-500/30 text-brand dark:text-blue-400 px-5 py-2 rounded-full text-xs sm:text-sm font-extrabold shadow-sm shadow-brand/10 hover:scale-105 transition-all">
+              <span className="flex h-2 w-2 rounded-full bg-brand dark:bg-blue-400 animate-ping" />
+              <ShieldCheck className="h-4 w-4 text-brand-light dark:text-blue-400" />
               <span>ISO 9001:2015 Accredited Enterprise Platform</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] sm:leading-[1.1]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1] sm:leading-[1.1]">
               Engineered for{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand via-indigo-600 to-blue-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand via-indigo-600 to-blue-500 dark:from-blue-400 dark:via-indigo-400 dark:to-cyan-400">
                 Future Tech Leads
               </span>
               <br />
@@ -263,7 +263,7 @@ class TaskRepository @Inject constructor(
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
               Master production-ready development, cloud architectures, and machine learning models with hands-on corporate assignments and verified ISO accreditation.
             </p>
 
@@ -278,24 +278,24 @@ class TaskRepository @Inject constructor(
               </Link>
               <Link
                 to="/internships"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-800 px-8 py-4 rounded-2xl text-base font-extrabold border border-slate-200 shadow-sm hover:shadow transition-all duration-200"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 px-8 py-4 rounded-2xl text-base font-extrabold border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow transition-all duration-200"
               >
-                <Briefcase className="h-4 w-4 text-brand" />
+                <Briefcase className="h-4 w-4 text-brand dark:text-blue-400" />
                 <span>Apply for Internships</span>
               </Link>
             </div>
 
             {/* Trust Badges Bar */}
-            <div className="pt-6 flex flex-wrap justify-center items-center gap-6 text-xs font-bold text-slate-500">
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-xs">
+            <div className="pt-6 flex flex-wrap justify-center items-center gap-6 text-xs font-bold text-slate-500 dark:text-slate-400">
+              <div className="flex items-center gap-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 <span>AICTE Compliant Syllabus</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-xs">
+              <div className="flex items-center gap-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 <span>Verifiable QR Certificates</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 shadow-xs">
+              <div className="flex items-center gap-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 <span>Stipend-Backed Internships</span>
               </div>
@@ -351,19 +351,19 @@ class TaskRepository @Inject constructor(
 
 
       {/* Stats Counter Grid */}
-      <section className="py-10 border-y border-slate-200/80 bg-white relative">
+      <section className="py-10 border-y border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/40 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {/* Stat Item 1 */}
             <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
-              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
-                <div className="inline-flex p-3.5 bg-blue-100 text-brand rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+              <div className="p-6 sm:p-8 bg-slate-50/70 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-850 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-blue-100 dark:bg-blue-950/80 text-brand dark:text-blue-400 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
                   <Users className="h-7 w-7" />
                 </div>
-                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-1">
                   {stats.students.toLocaleString()}+
                 </div>
-                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-wider">
                   Engineering Graduates Trained
                 </div>
               </div>
@@ -371,14 +371,14 @@ class TaskRepository @Inject constructor(
 
             {/* Stat Item 2 */}
             <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
-              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
-                <div className="inline-flex p-3.5 bg-indigo-100 text-indigo-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+              <div className="p-6 sm:p-8 bg-slate-50/70 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-850 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
                   <Building2 className="h-7 w-7" />
                 </div>
-                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-1">
                   {stats.partners}+
                 </div>
-                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-wider">
                   Hiring Corporate Partners
                 </div>
               </div>
@@ -386,14 +386,14 @@ class TaskRepository @Inject constructor(
 
             {/* Stat Item 3 */}
             <GlareHover glareColor="#ffffff" glareOpacity={0.35} glareAngle={-30} glareSize={250} transitionDuration={700} className="rounded-3xl h-full">
-              <div className="p-6 sm:p-8 bg-slate-50/70 hover:bg-white rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
-                <div className="inline-flex p-3.5 bg-emerald-100 text-emerald-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+              <div className="p-6 sm:p-8 bg-slate-50/70 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-850 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group h-full">
+                <div className="inline-flex p-3.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
                   <Award className="h-7 w-7" />
                 </div>
-                <div className="text-3xl sm:text-5xl font-black text-slate-900 mb-1">
+                <div className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-1">
                   {stats.placements}%
                 </div>
-                <div className="text-xs sm:text-sm text-slate-500 font-extrabold uppercase tracking-wider">
+                <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-wider">
                   Placement & Viva Success Rate
                 </div>
               </div>
@@ -479,29 +479,29 @@ class TaskRepository @Inject constructor(
       </section>
 
       {/* Partner Marquee Section */}
-      <section className="py-12 overflow-hidden bg-slate-50 border-b border-slate-200/80">
+      <section className="py-12 overflow-hidden bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 mb-6">
-          <p className="text-center text-xs font-extrabold text-slate-400 uppercase tracking-widest">
+          <p className="text-center text-xs font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
             Recognized & Endorsed by Leading Tech Enterprises
           </p>
         </div>
         <div className="relative w-full overflow-hidden select-none">
-          <div className="animate-marquee-slow flex items-center gap-14 text-slate-500 font-bold text-lg py-2">
+          <div className="animate-marquee-slow flex items-center gap-14 text-slate-500 dark:text-slate-400 font-bold text-lg py-2">
             {partners.map((partner, index) => (
               <span
                 key={`p1-${index}`}
-                className="flex items-center gap-2.5 hover:text-brand transition-colors duration-200 cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-2.5 hover:text-brand dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer whitespace-nowrap"
               >
-                <Brain className="h-5 w-5 text-brand" />
+                <Brain className="h-5 w-5 text-brand dark:text-blue-400" />
                 {partner}
               </span>
             ))}
             {partners.map((partner, index) => (
               <span
                 key={`p2-${index}`}
-                className="flex items-center gap-2.5 hover:text-brand transition-colors duration-200 cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-2.5 hover:text-brand dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer whitespace-nowrap"
               >
-                <Brain className="h-5 w-5 text-brand" />
+                <Brain className="h-5 w-5 text-brand dark:text-blue-400" />
                 {partner}
               </span>
             ))}
@@ -510,26 +510,28 @@ class TaskRepository @Inject constructor(
       </section>
 
       {/* Bento-Styled Feature Showcase */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white dark:bg-[#0b0f19]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <span className="text-brand font-extrabold text-xs uppercase tracking-widest bg-brand-accent px-3 py-1 rounded-full">
+            <span className="text-brand dark:text-blue-400 font-extrabold text-xs uppercase tracking-widest bg-brand-accent dark:bg-blue-950/60 px-3 py-1 rounded-full border border-transparent dark:border-blue-500/20">
               Why Mountreach Solution
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
               Elite Academic & Career Ecosystem
             </h2>
-            <p className="text-slate-600 font-medium">
+            <p className="text-slate-600 dark:text-slate-400 font-medium">
               Explore our core pillars designed to launch your engineering career with maximum impact.
             </p>
           </div>
 
           {/* Tab Selector */}
-          <div className="flex justify-center p-1.5 bg-slate-100 rounded-2xl max-w-xl mx-auto mb-12 border border-slate-200">
+          <div className="flex justify-center p-1.5 bg-slate-100 dark:bg-slate-900 rounded-2xl max-w-xl mx-auto mb-12 border border-slate-200 dark:border-slate-800">
             <button
               onClick={() => setActiveTab('industrial')}
               className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'industrial' ? 'bg-white text-brand shadow-md' : 'text-slate-600 hover:text-brand'
+                activeTab === 'industrial'
+                  ? 'bg-white dark:bg-slate-800 text-brand dark:text-blue-400 shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
               }`}
             >
               Industrial Training
@@ -537,7 +539,9 @@ class TaskRepository @Inject constructor(
             <button
               onClick={() => setActiveTab('internships')}
               className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'internships' ? 'bg-white text-brand shadow-md' : 'text-slate-600 hover:text-brand'
+                activeTab === 'internships'
+                  ? 'bg-white dark:bg-slate-800 text-brand dark:text-blue-400 shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
               }`}
             >
               Paid Internships
@@ -545,7 +549,9 @@ class TaskRepository @Inject constructor(
             <button
               onClick={() => setActiveTab('certifications')}
               className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'certifications' ? 'bg-white text-brand shadow-md' : 'text-slate-600 hover:text-brand'
+                activeTab === 'certifications'
+                  ? 'bg-white dark:bg-slate-800 text-brand dark:text-blue-400 shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-brand dark:hover:text-blue-400'
               }`}
             >
               Global Accreditation
@@ -553,7 +559,7 @@ class TaskRepository @Inject constructor(
           </div>
 
           {/* Active Tab Bento Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden max-w-5xl mx-auto transition-all duration-300">
+          <div className="bg-white dark:bg-slate-900/90 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden max-w-5xl mx-auto transition-all duration-300">
             <div className="grid grid-cols-1 md:grid-cols-12">
               {/* Left Details */}
               <div className="p-8 sm:p-12 md:col-span-7 space-y-6 flex flex-col justify-center">
@@ -561,28 +567,28 @@ class TaskRepository @Inject constructor(
                   <currentTab.icon className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-tight">
                     {currentTab.title}
                   </h3>
-                  <p className="text-brand text-xs sm:text-sm font-extrabold mt-1 uppercase tracking-wider">
+                  <p className="text-brand dark:text-blue-400 text-xs sm:text-sm font-extrabold mt-1 uppercase tracking-wider">
                     {currentTab.subtitle}
                   </p>
                 </div>
-                <p className="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium text-sm sm:text-base">
                   {currentTab.description}
                 </p>
-                <div className="space-y-3 pt-2 border-t border-slate-100">
+                <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
                   {currentTab.bullets.map((bullet, idx) => (
                     <div key={idx} className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-700 text-sm font-semibold">{bullet}</span>
+                      <span className="text-slate-700 dark:text-slate-300 text-sm font-semibold">{bullet}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Right Action Graphic */}
-              <div className="bg-slate-900 md:col-span-5 p-8 sm:p-12 flex flex-col justify-between text-white relative">
+              <div className="bg-slate-900 dark:bg-slate-950 md:col-span-5 p-8 sm:p-12 flex flex-col justify-between text-white relative">
                 <div className="absolute inset-0 bg-grid-pattern-dark opacity-10 pointer-events-none" />
                 <div className="relative space-y-6">
                   <div className="bg-white/10 backdrop-blur-md border border-white/10 p-5 rounded-2xl space-y-2">
@@ -622,13 +628,13 @@ class TaskRepository @Inject constructor(
       </section>
 
       {/* Student Testimonials Grid */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200/80">
+      <section className="py-20 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-2">
-            <span className="text-brand font-extrabold text-xs uppercase tracking-widest bg-brand-accent px-3 py-1 rounded-full">
+            <span className="text-brand dark:text-blue-400 font-extrabold text-xs uppercase tracking-widest bg-brand-accent dark:bg-blue-950/60 px-3 py-1 rounded-full border border-transparent dark:border-blue-500/20">
               Success Stories
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
               Loved by Students Across Engineering Colleges
             </h2>
           </div>
@@ -644,26 +650,26 @@ class TaskRepository @Inject constructor(
                 transitionDuration={700}
                 className="rounded-3xl h-full"
               >
-                <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6 h-full">
+                <div className="p-8 bg-white dark:bg-slate-900/90 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6 h-full">
                   <div className="space-y-4">
                     <div className="flex gap-1 text-amber-400">
                       {[...Array(t.rating)].map((_, i) => (
                         <Star key={i} className="h-4 w-4 fill-current" />
                       ))}
                     </div>
-                    <p className="text-slate-600 text-sm font-medium leading-relaxed italic">
+                    <p className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-relaxed italic">
                       "{t.comment}"
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                  <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-brand to-brand-light text-white font-black text-sm flex items-center justify-center shadow-sm">
                       {t.name.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{t.name}</h4>
-                      <p className="text-xs text-brand font-bold">{t.role}</p>
-                      <p className="text-[10px] text-slate-400 font-semibold">{t.college}</p>
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-sm leading-tight">{t.name}</h4>
+                      <p className="text-xs text-brand dark:text-blue-400 font-bold">{t.role}</p>
+                      <p className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">{t.college}</p>
                     </div>
                   </div>
                 </div>
@@ -674,13 +680,13 @@ class TaskRepository @Inject constructor(
       </section>
 
       {/* Interactive FAQ Accordion */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-[#0b0f19]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
               Frequently Asked Questions
             </h2>
-            <p className="text-slate-500 font-medium text-sm">
+            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">
               Everything you need to know about enrollments, internships, and certification.
             </p>
           </div>
@@ -691,21 +697,21 @@ class TaskRepository @Inject constructor(
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-slate-200 overflow-hidden transition-all duration-200"
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-all duration-200"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 font-extrabold text-slate-900 text-base"
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 font-extrabold text-slate-900 dark:text-white text-base transition-colors"
                   >
                     <span>{faq.q}</span>
                     {isOpen ? (
-                      <ChevronUp className="h-5 w-5 text-brand flex-shrink-0" />
+                      <ChevronUp className="h-5 w-5 text-brand dark:text-blue-400 flex-shrink-0" />
                     ) : (
                       <ChevronDown className="h-5 w-5 text-slate-400 flex-shrink-0" />
                     )}
                   </button>
                   {isOpen && (
-                    <div className="p-5 pt-0 bg-slate-50/50 text-slate-600 text-sm font-medium leading-relaxed border-t border-slate-100">
+                    <div className="p-5 pt-0 bg-slate-50/50 dark:bg-slate-900/70 text-slate-600 dark:text-slate-300 text-sm font-medium leading-relaxed border-t border-slate-100 dark:border-slate-800">
                       {faq.a}
                     </div>
                   )}

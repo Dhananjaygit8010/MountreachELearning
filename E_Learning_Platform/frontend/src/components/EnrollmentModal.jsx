@@ -58,13 +58,13 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md rounded-3xl border border-slate-200 shadow-2xl overflow-hidden relative transform transition-all duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden relative transform transition-all duration-300">
         
         {/* Close Button */}
         <button
           onClick={onClose}
           disabled={processing}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-full hover:bg-slate-50 transition-colors"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
         >
           <X className="h-5 w-5" />
         </button>
@@ -72,14 +72,14 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
         {paymentSuccess ? (
           /* Success Screen */
           <div className="p-8 text-center flex flex-col items-center justify-center space-y-4">
-            <div className="bg-emerald-50 text-emerald-500 p-4 rounded-full border border-emerald-100 animate-bounce-short">
+            <div className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-500 p-4 rounded-full border border-emerald-100 dark:border-emerald-800 animate-bounce-short">
               <CheckCircle className="h-12 w-12" />
             </div>
-            <h3 className="text-2xl font-black text-slate-900">Payment Authorized!</h3>
-            <p className="text-slate-500 font-semibold">
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white">Payment Authorized!</h3>
+            <p className="text-slate-500 dark:text-slate-400 font-semibold">
               Thank you! Your enrollment has been verified.
             </p>
-            <div className="text-xs text-brand font-bold bg-brand-accent px-4 py-1.5 rounded-full uppercase tracking-wider">
+            <div className="text-xs text-brand font-bold bg-brand-accent dark:bg-brand/20 px-4 py-1.5 rounded-full uppercase tracking-wider">
               Enrolling in Portal Database...
             </div>
           </div>
@@ -87,29 +87,29 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
           /* Payment Form Screen */
           <form onSubmit={handlePaymentSubmit} className="p-6 sm:p-8 space-y-6">
             <div>
-              <span className="text-xs font-extrabold text-brand uppercase tracking-wider bg-brand-accent px-3 py-1 rounded-full">
+              <span className="text-xs font-extrabold text-brand uppercase tracking-wider bg-brand-accent dark:bg-brand/20 px-3 py-1 rounded-full">
                 Checkout Details
               </span>
-              <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-2">
                 Authorize Enrollment
               </h3>
-              <p className="text-slate-500 text-xs mt-1">
-                Course: <strong className="text-slate-700">{course.title}</strong>
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
+                Course: <strong className="text-slate-700 dark:text-slate-200">{course.title}</strong>
               </p>
             </div>
 
             {/* Bill Summary */}
-            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2.5">
-              <div className="flex justify-between text-sm text-slate-600 font-medium">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 space-y-2.5">
+              <div className="flex justify-between text-sm text-slate-600 dark:text-slate-300 font-medium">
                 <span>Program Fees</span>
                 <span>₹{course.price.toLocaleString()}</span>
               </div>
-              <div className="flex justify-between text-sm text-slate-600 font-medium">
+              <div className="flex justify-between text-sm text-slate-600 dark:text-slate-300 font-medium">
                 <span>Certification type</span>
                 <span className="text-brand font-semibold">Paid Course Certification</span>
               </div>
-              <div className="h-px bg-slate-200 my-1" />
-              <div className="flex justify-between text-slate-950 font-extrabold">
+              <div className="h-px bg-slate-200 dark:bg-slate-700 my-1" />
+              <div className="flex justify-between text-slate-950 dark:text-white font-extrabold">
                 <span>Total Amount Due</span>
                 <span>₹{course.price.toLocaleString()}</span>
               </div>
@@ -124,7 +124,7 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
 
               {/* Card Number */}
               <div>
-                <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                   Card Number
                 </label>
                 <input
@@ -133,8 +133,8 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
                   value={cardNumber}
                   onChange={handleCardNumberChange}
                   disabled={processing}
-                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                    errors.cardNumber ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                  className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 ${
+                    errors.cardNumber ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                   }`}
                 />
                 {errors.cardNumber && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.cardNumber}</p>}
@@ -143,7 +143,7 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
               {/* Expiry & CVV */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                     Expiry Date
                   </label>
                   <input
@@ -153,15 +153,15 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
                     value={expiry}
                     onChange={(e) => setExpiry(e.target.value)}
                     disabled={processing}
-                    className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                      errors.expiry ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                    className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 ${
+                      errors.expiry ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                     }`}
                   />
                   {errors.expiry && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.expiry}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                     CVV Security Code
                   </label>
                   <input
@@ -171,8 +171,8 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
                     value={cvv}
                     onChange={(e) => setCvv(e.target.value.replace(/\D/g, ''))}
                     disabled={processing}
-                    className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand ${
-                      errors.cvv ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200'
+                    className={`w-full p-3 border rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 ${
+                      errors.cvv ? 'border-rose-300 bg-rose-50/10' : 'border-slate-200 dark:border-slate-700'
                     }`}
                   />
                   {errors.cvv && <p className="text-rose-500 text-xs mt-1 font-semibold">{errors.cvv}</p>}
@@ -180,9 +180,9 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
               </div>
             </div>
 
-            <div className="flex gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100 items-start">
+            <div className="flex gap-2 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 items-start">
               <ShieldCheck className="h-5 w-5 text-brand flex-shrink-0 mt-0.5" />
-              <p className="text-[10px] text-slate-500 font-medium leading-relaxed">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                 This is a secure checkout simulation. Clicking "Authorize Payment" will write your enrollment record directly to the Mountreach course registry database.
               </p>
             </div>
@@ -193,7 +193,7 @@ const EnrollmentModal = ({ course, isOpen, onClose, onEnrollSuccess }) => {
                 type="button"
                 onClick={onClose}
                 disabled={processing}
-                className="flex-1 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-all duration-200"
+                className="flex-1 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold py-3.5 rounded-xl text-sm transition-all duration-200"
               >
                 Cancel
               </button>

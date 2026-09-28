@@ -9,27 +9,27 @@ const Toast = () => {
 
   const typeConfig = {
     success: {
-      bg: 'bg-emerald-50 border-emerald-200',
-      text: 'text-emerald-800',
-      iconColor: 'text-emerald-500',
+      bg: 'bg-emerald-50 dark:bg-emerald-950/90 border-emerald-200 dark:border-emerald-800/80',
+      text: 'text-emerald-800 dark:text-emerald-200',
+      iconColor: 'text-emerald-500 dark:text-emerald-400',
       Icon: CheckCircle,
     },
     error: {
-      bg: 'bg-rose-50 border-rose-200',
-      text: 'text-rose-800',
-      iconColor: 'text-rose-500',
+      bg: 'bg-rose-50 dark:bg-rose-950/90 border-rose-200 dark:border-rose-800/80',
+      text: 'text-rose-800 dark:text-rose-200',
+      iconColor: 'text-rose-500 dark:text-rose-400',
       Icon: AlertCircle,
     },
     warning: {
-      bg: 'bg-amber-50 border-amber-200',
-      text: 'text-amber-800',
-      iconColor: 'text-amber-500',
+      bg: 'bg-amber-50 dark:bg-amber-950/90 border-amber-200 dark:border-amber-800/80',
+      text: 'text-amber-800 dark:text-amber-200',
+      iconColor: 'text-amber-500 dark:text-amber-400',
       Icon: AlertTriangle,
     },
     info: {
-      bg: 'bg-sky-50 border-sky-200',
-      text: 'text-sky-800',
-      iconColor: 'text-sky-500',
+      bg: 'bg-sky-50 dark:bg-sky-950/90 border-sky-200 dark:border-sky-800/80',
+      text: 'text-sky-800 dark:text-sky-200',
+      iconColor: 'text-sky-500 dark:text-sky-400',
       Icon: Info,
     },
   };

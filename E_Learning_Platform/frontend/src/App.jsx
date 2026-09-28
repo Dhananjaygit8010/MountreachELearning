@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Components
 import Navbar from './components/Navbar';
@@ -18,9 +19,10 @@ import AuthPage from './pages/AuthPage';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="flex flex-col min-h-screen">
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 transition-colors duration-300">
           {/* Header */}
           <Navbar />
 
@@ -48,6 +50,7 @@ function App() {
         </div>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

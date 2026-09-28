@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { Menu, X, GraduationCap, LogOut, Briefcase, LayoutDashboard, LogIn, Database, Sparkles } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { Menu, X, GraduationCap, LogOut, Briefcase, LayoutDashboard, LogIn, Database, Sparkles, Sun, Moon } from 'lucide-react';
 import DemoDataManager from './DemoDataManager';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 w-full glass-nav shadow-sm transition-all duration-300">
+      <nav className="sticky top-0 z-40 w-full glass-nav shadow-xs transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Brand Logo */}
@@ -40,10 +42,10 @@ const Navbar = () => {
                   <GraduationCap className="h-6 w-6" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight leading-none group-hover:text-brand transition-colors">
+                  <span className="font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight leading-none group-hover:text-brand dark:group-hover:text-blue-400 transition-colors">
                     MOUNTREACH
                   </span>
-                  <span className="text-[10px] text-brand font-bold tracking-widest uppercase mt-0.5">
+                  <span className="text-[10px] text-brand dark:text-blue-400 font-bold tracking-widest uppercase mt-0.5">
                     Solution Pvt. Ltd.
                   </span>
                 </div>
@@ -61,11 +63,11 @@ const Navbar = () => {
                     to={link.path}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all duration-200 ${
                       active
-                        ? 'text-brand bg-brand-accent/60 shadow-sm'
-                        : 'text-slate-600 hover:text-brand hover:bg-slate-50'
+                        ? 'text-brand dark:text-blue-400 bg-brand-accent/70 dark:bg-blue-950/60 shadow-xs border border-brand/20 dark:border-blue-500/30'
+                        : 'text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                     }`}
                   >
-                    <Icon className={`h-4 w-4 ${active ? 'text-brand' : 'text-slate-400'}`} />
+                    <Icon className={`h-4 w-4 ${active ? 'text-brand dark:text-blue-400' : 'text-slate-400 dark:text-slate-400'}`} />
                     {link.name}
                   </Link>
                 );
@@ -74,20 +76,34 @@ const Navbar = () => {
               {/* Demo Data Quick Manager Button */}
               <button
                 onClick={() => setDemoModalOpen(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-slate-600 hover:text-brand bg-slate-100 hover:bg-brand-accent/50 border border-slate-200/80 transition-all duration-200 hover:scale-105"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 bg-slate-100 dark:bg-slate-800/90 hover:bg-brand-accent/50 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 transition-all duration-200 hover:scale-105"
                 title="Manage Live & Demo Data"
               >
-                <Database className="h-3.5 w-3.5 text-brand" />
+                <Database className="h-3.5 w-3.5 text-brand dark:text-blue-400" />
                 <span>Live DB</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
               </button>
 
-              <div className="h-6 w-px bg-slate-200 mx-2" />
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                className="p-2.5 rounded-2xl text-slate-600 dark:text-amber-400 bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 transition-all duration-300 hover:scale-105 shadow-xs"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="h-4 w-4 text-amber-400 transition-transform hover:rotate-45" />
+                ) : (
+                  <Moon className="h-4 w-4 text-slate-700 hover:text-brand transition-transform hover:-rotate-12" />
+                )}
+              </button>
+
+              <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-2" />
 
               {user ? (
                 <div className="flex items-center gap-3">
                   {/* User Profile Chip */}
-                  <div className="flex items-center gap-2.5 pl-2 py-1 pr-3 rounded-full bg-slate-100 border border-slate-200/80">
+                  <div className="flex items-center gap-2.5 pl-2 py-1 pr-3 rounded-full bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700">
                     <div
                       className={`h-8 w-8 rounded-full text-white font-black text-xs flex items-center justify-center shadow-sm ${
                         user.role === 'admin'
@@ -102,26 +118,26 @@ const Navbar = () => {
                         <Link
                           to="/admin"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="text-xs font-bold text-slate-800 leading-none max-w-[110px] truncate hover:text-brand transition-colors"
+                          className="text-xs font-bold text-slate-800 dark:text-slate-100 leading-none max-w-[110px] truncate hover:text-brand dark:hover:text-blue-400 transition-colors"
                           title="Go to Admin Dashboard"
                         >
                           {user.name}
                         </Link>
                       ) : (
-                        <span className="text-xs font-bold text-slate-800 leading-none max-w-[110px] truncate">
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-100 leading-none max-w-[110px] truncate">
                           {user.name}
                         </span>
                       )}
                       <span
                         className={`text-[9px] font-extrabold uppercase tracking-wider ${
-                          user.role === 'admin' ? 'text-amber-600' : 'text-slate-400'
+                          user.role === 'admin' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400 dark:text-slate-400'
                         }`}
                       >
                         {user.role === 'admin' ? (
                           <Link
                             to="/admin"
                             onClick={() => setMobileMenuOpen(false)}
-                            className="hover:text-brand transition-colors"
+                            className="hover:text-brand dark:hover:text-blue-400 transition-colors"
                             title="Go to Admin Dashboard"
                           >
                             System Administrator
@@ -133,7 +149,7 @@ const Navbar = () => {
 
                   <button
                     onClick={handleLogout}
-                    className="p-2.5 rounded-2xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all duration-200"
+                    className="p-2.5 rounded-2xl text-slate-400 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-transparent hover:border-rose-100 dark:hover:border-rose-900/40 transition-all duration-200"
                     title="Sign Out"
                   >
                     <LogOut className="h-4 w-4" />
@@ -150,18 +166,25 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile Hamburger Button */}
+            {/* Mobile Actions Button */}
             <div className="flex items-center gap-2 md:hidden">
               <button
+                onClick={toggleTheme}
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-amber-400 border border-slate-200 dark:border-slate-700"
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
+              </button>
+              <button
                 onClick={() => setDemoModalOpen(true)}
-                className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:text-brand"
+                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700"
                 title="Manage Live & Demo Data"
               >
-                <Database className="h-4 w-4 text-brand" />
+                <Database className="h-4 w-4 text-brand dark:text-blue-400" />
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-slate-700 p-2.5 rounded-2xl hover:bg-slate-100 transition-colors"
+                className="text-slate-700 dark:text-slate-200 p-2.5 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -171,7 +194,7 @@ const Navbar = () => {
 
         {/* Mobile Dropdown Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-xl px-4 py-6 space-y-3 animate-fadeIn">
+          <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-4 py-6 space-y-3 animate-fadeIn">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -182,7 +205,7 @@ const Navbar = () => {
                   className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold transition-all ${
                     isActive(link.path)
                       ? 'bg-brand text-white shadow-md'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -192,39 +215,39 @@ const Navbar = () => {
             })}
 
             {user ? (
-              <div className="space-y-3 pt-3 border-t border-slate-100">
+              <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold transition-all ${
                     isActive('/dashboard')
                       ? 'bg-brand text-white shadow-md'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
                   <LayoutDashboard className="h-5 w-5" />
                   Dashboard
                 </Link>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
+                <div className="p-4 bg-slate-50 dark:bg-slate-800/70 rounded-2xl border border-slate-200/80 dark:border-slate-700 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-brand text-white font-black text-sm flex items-center justify-center">
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <div className="font-bold text-slate-800 text-sm">{user.name}</div>
-                      <div className="text-xs text-slate-500">{user.college || user.email}</div>
+                      <div className="font-bold text-slate-800 dark:text-slate-100 text-sm">{user.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400">{user.college || user.email}</div>
                     </div>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+                    className="p-2 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition-colors"
                   >
                     <LogOut className="h-5 w-5" />
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="pt-3 border-t border-slate-100">
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
@@ -238,6 +261,7 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+
 
       {/* Live & Demo Data Modal */}
       <DemoDataManager
