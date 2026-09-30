@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { GraduationCap, LogIn, UserPlus, Eye, EyeOff, Loader, Shield } from 'lucide-react';
+import { GraduationCap, LogIn, UserPlus, Eye, EyeOff, Loader } from 'lucide-react';
 
 const AuthPage = ({ defaultIsLogin = true }) => {
   const { user, login, register, showToast } = useContext(AuthContext);
@@ -59,7 +59,7 @@ const AuthPage = ({ defaultIsLogin = true }) => {
       if (!college.trim()) newErrors.college = 'College/Institution name is required';
       if (!branch.trim()) newErrors.branch = 'Branch or diploma specialization is required';
       if (email.toLowerCase().trim() === 'admin@gmail.com') {
-        newErrors.email = 'Admin account is pre-configured. Please switch to Sign In.';
+        newErrors.email = 'This email address is reserved. Please sign in or choose another email.';
       }
     }
 
@@ -273,33 +273,6 @@ const AuthPage = ({ defaultIsLogin = true }) => {
               'Create Account'
             )}
           </button>
-
-          {/* Admin Credentials Helper */}
-          {isLogin && (
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-bold">
-                <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
-                  <Shield className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
-                  Administrator Access
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmail('Admin@gmail.com');
-                    setPassword('Admin@123');
-                    setErrors({});
-                  }}
-                  className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-extrabold hover:underline"
-                >
-                  ⚡ Auto-Fill Admin Credentials
-                </button>
-              </div>
-              <div className="bg-indigo-50/60 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/60 rounded-xl p-2.5 text-[11px] text-indigo-950 dark:text-indigo-200 font-mono flex items-center justify-between">
-                <span>User: <strong>Admin@gmail.com</strong></span>
-                <span>Pass: <strong>Admin@123</strong></span>
-              </div>
-            </div>
-          )}
         </form>
       </div>
     </div>
