@@ -5,6 +5,10 @@ const {
   injectDummyData,
   cleanDummyData,
 } = require('../controllers/dummy.controller');
+const { protect, authorize } = require('../middlewares/auth.middleware');
+
+// All dummy data management routes require Administrator privileges
+router.use(protect, authorize('admin'));
 
 router.get('/status', getDummyStatus);
 router.post('/inject', injectDummyData);

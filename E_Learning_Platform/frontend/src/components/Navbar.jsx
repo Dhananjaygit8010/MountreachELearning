@@ -2,14 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Menu, X, GraduationCap, LogOut, Briefcase, LayoutDashboard, LogIn, Database, Sparkles, Sun, Moon } from 'lucide-react';
-import DemoDataManager from './DemoDataManager';
+import { Menu, X, GraduationCap, LogOut, Briefcase, LayoutDashboard, LogIn, Sun, Moon } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -73,16 +71,6 @@ const Navbar = () => {
                 );
               })}
 
-              {/* Demo Data Quick Manager Button */}
-              <button
-                onClick={() => setDemoModalOpen(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 bg-slate-100 dark:bg-slate-800/90 hover:bg-brand-accent/50 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700 transition-all duration-200 hover:scale-105"
-                title="Manage Live & Demo Data"
-              >
-                <Database className="h-3.5 w-3.5 text-brand dark:text-blue-400" />
-                <span>Live DB</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
-              </button>
 
               {/* Theme Toggle Button */}
               <button
@@ -263,17 +251,6 @@ const Navbar = () => {
       </nav>
 
 
-      {/* Live & Demo Data Modal */}
-      <DemoDataManager
-        isOpen={demoModalOpen}
-        onClose={() => setDemoModalOpen(false)}
-        onDataChanged={() => {
-          // If on courses or internships page, trigger soft reload
-          if (location.pathname === '/courses' || location.pathname === '/internships') {
-            window.location.reload();
-          }
-        }}
-      />
     </>
   );
 };

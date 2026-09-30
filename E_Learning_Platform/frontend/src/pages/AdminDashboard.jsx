@@ -18,8 +18,10 @@ import {
   Layers,
   Search,
   RefreshCw,
+  Database,
   X
 } from 'lucide-react';
+import DemoDataManager from '../components/DemoDataManager';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const AdminDashboard = () => {
   // Modals
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [showInternshipModal, setShowInternshipModal] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   // Forms state
   const [courseForm, setCourseForm] = useState({
@@ -229,6 +232,14 @@ const AdminDashboard = () => {
             >
               <RefreshCw className="h-3.5 w-3.5" />
               Sync DB
+            </button>
+            <button
+              onClick={() => setShowDemoModal(true)}
+              className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold px-4 py-2.5 rounded-xl text-xs transition-all"
+              title="Manage Live & Demo Data"
+            >
+              <Database className="h-3.5 w-3.5 text-brand dark:text-blue-400" />
+              Live Data & Demo
             </button>
             <button
               onClick={() => setShowCourseModal(true)}
@@ -886,6 +897,13 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* LIVE & DEMO DATA MANAGER MODAL */}
+      <DemoDataManager
+        isOpen={showDemoModal}
+        onClose={() => setShowDemoModal(false)}
+        onDataChanged={fetchAllData}
+      />
     </div>
   );
 };
