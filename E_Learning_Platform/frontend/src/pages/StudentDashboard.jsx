@@ -40,7 +40,15 @@ import {
   Check,
   AlertCircle,
   ExternalLink,
-  RefreshCw
+  RefreshCw,
+  PieChart,
+  BarChart3,
+  Activity,
+  Menu,
+  Layers,
+  Compass,
+  Sun,
+  Moon
 } from 'lucide-react';
 import GlareHover from '../components/CardHoverAnim';
 import InvoiceModal from '../components/InvoiceModal';
@@ -61,8 +69,44 @@ const StudentDashboard = () => {
   const { user, loading, myApplications, updateProfile, punchAttendance, submitSupportTicket, showToast } = useContext(AuthContext);
   const { theme, toggleTheme } = useTheme();
 
-  // Active Tab
+  // Active Tab & Left Sidebar Drawer
   const [activePane, setActivePane] = useState('overview');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Analytics Hover States
+  const [activeDomainHover, setActiveDomainHover] = useState(null);
+  const [hoveredDay, setHoveredDay] = useState(null);
+
+  // Curriculum Domain Distribution (Pie / Donut Chart Data)
+  const domainDistribution = [
+    { name: 'Full-Stack Architecture (MERN)', percentage: 40, hours: '48 hrs', color: '#4f46e5', badge: 'Core Stack' },
+    { name: 'AI, ML & Neural Networks', percentage: 25, hours: '30 hrs', color: '#8b5cf6', badge: 'Advanced Lab' },
+    { name: 'Cloud DevOps & Docker CI/CD', percentage: 20, hours: '24 hrs', color: '#10b981', badge: 'Cloud Deploy' },
+    { name: 'Database Optimization & Sharding', percentage: 15, hours: '18 hrs', color: '#f59e0b', badge: 'Data Tier' },
+  ];
+
+  // Weekly Activity Graph Data
+  const weeklyHoursData = [
+    { day: 'Mon', hours: 4.5, lessons: 2 },
+    { day: 'Tue', hours: 6.0, lessons: 3 },
+    { day: 'Wed', hours: 3.5, lessons: 1 },
+    { day: 'Thu', hours: 7.0, lessons: 4 },
+    { day: 'Fri', hours: 5.5, lessons: 3 },
+    { day: 'Sat', hours: 8.0, lessons: 5 },
+    { day: 'Sun', hours: 2.5, lessons: 1 },
+  ];
+  const totalWeeklyHours = weeklyHoursData.reduce((acc, d) => acc + d.hours, 0);
+  const avgDailyHours = (totalWeeklyHours / 7).toFixed(1);
+
+  // Monthly Attendance Consistency Graph Data
+  const attendanceTrendData = [
+    { week: 'Wk 1', rate: 85 },
+    { week: 'Wk 2', rate: 92 },
+    { week: 'Wk 3', rate: 88 },
+    { week: 'Wk 4', rate: 96 },
+    { week: 'Wk 5', rate: 94 },
+    { week: 'Wk 6', rate: 98 },
+  ];
 
   // Modals state
   const [selectedCertificate, setSelectedCertificate] = useState(null);
@@ -304,188 +348,633 @@ const StudentDashboard = () => {
   const enrolled = user.enrolledCourses || [];
 
   return (
-    <div className="bg-slate-50 dark:bg-[#0b0f19] min-h-screen py-10 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="bg-slate-50/70 dark:bg-[#0b0f19] min-h-screen py-6 sm:py-8 transition-colors duration-300">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        {/* TOP GREETING & COMMAND BANNER */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-          <div className="flex items-center gap-5">
-            <div className="relative">
-              <img
-                src={profileForm.avatar || AVATAR_OPTIONS[0]}
-                alt={user.name}
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-brand/20 shadow-md"
-              />
-              <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 flex items-center justify-center text-[10px] text-white font-bold" title="Online & Active">
-                ✓
+        {/* Mobile Header with Left Sidebar Drawer Toggle */}
+        <div className="lg:hidden flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              title="Open Navigation Menu"
+            >
+              <Menu className="h-5 w-5 text-brand dark:text-blue-400" />
+            </button>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-slate-900 dark:text-white text-sm">Mountreach LMS</span>
+              <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-brand/10 dark:bg-blue-950/60 text-brand dark:text-blue-400 border border-brand/20">
+                Student
               </span>
             </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-black text-amber-500 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 px-2.5 py-1 rounded-xl flex items-center gap-1">
+              <Flame className="h-3.5 w-3.5" /> {presentDays}d
+            </span>
+          </div>
+        </div>
+
+        {/* 2-Column Responsive Layout: Left Sidebar + Right Main Area */}
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
+
+          {/* Backdrop on mobile when sidebar is open */}
+          {sidebarOpen && (
+            <div
+              onClick={() => setSidebarOpen(false)}
+              className="fixed inset-0 z-40 bg-slate-950/50 backdrop-blur-xs lg:hidden"
+            />
+          )}
+
+          {/* LEFT SIDEBAR NAVIGATION MENU */}
+          <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 border-r lg:border border-slate-200 dark:border-slate-800 lg:rounded-3xl p-5 shadow-2xl lg:shadow-sm flex flex-col justify-between overflow-y-auto transition-transform duration-300 lg:translate-x-0 lg:static lg:h-auto lg:z-0 lg:top-24 lg:sticky self-start flex-shrink-0 ${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}>
+            <div className="space-y-6">
+              {/* Sidebar Header & Close on Mobile */}
+              <div className="flex items-center justify-between lg:hidden border-b border-slate-100 dark:border-slate-800 pb-3">
+                <span className="font-black text-slate-900 dark:text-white text-sm">Dashboard Navigation</span>
+                <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Student Profile Card in Sidebar */}
+              <div className="p-4 bg-gradient-to-br from-slate-50 to-blue-50/50 dark:from-slate-800/80 dark:to-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <img
+                      src={profileForm.avatar || AVATAR_OPTIONS[0]}
+                      alt={user.name}
+                      className="h-12 w-12 rounded-xl object-cover border-2 border-brand/30 shadow-sm"
+                    />
+                    <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" title="Online" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-black text-slate-900 dark:text-white text-sm truncate">{user.name}</h4>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold truncate">{user.rollNumber || 'MR-SCHOLAR-2026'}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
+                  <div className="flex justify-between text-[10px] font-extrabold uppercase text-slate-400 dark:text-slate-500">
+                    <span>Profile Setup</span>
+                    <span className="text-brand dark:text-blue-400">{calcProfileCompleteness()}%</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                    <div className="bg-brand h-full rounded-full transition-all duration-500" style={{ width: `${calcProfileCompleteness()}%` }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Menu Groups */}
+              <nav className="space-y-5">
+                {[
+                  {
+                    group: 'ACADEMICS & LEARNING',
+                    items: [
+                      { id: 'overview', name: 'Overview & Analytics', icon: LayoutDashboard },
+                      { id: 'courses', name: 'My Curriculum', icon: BookOpen, count: enrolled.length },
+                      { id: 'attendance', name: 'Attendance & Streak', icon: Calendar, badge: `${attendanceRate}%` },
+                      { id: 'progress', name: 'Learning Progress', icon: TrendingUp },
+                    ],
+                  },
+                  {
+                    group: 'CAREER & HONORS',
+                    items: [
+                      { id: 'certificates', name: 'ISO Certifications', icon: Award, count: enrolled.filter((c) => (courseProgress[c._id || c] || 0) === 100).length },
+                      { id: 'payments', name: 'Invoices & Billing', icon: CreditCard },
+                      { id: 'applications', name: 'Paid Internships', icon: Briefcase, count: myApplications?.length || 0 },
+                    ],
+                  },
+                  {
+                    group: 'ACCOUNT & SUPPORT',
+                    items: [
+                      { id: 'profile', name: 'Student Profile', icon: User },
+                      { id: 'settings', name: 'Account Settings', icon: Settings },
+                      { id: 'help', name: 'Help Desk & AI Chat', icon: HelpCircle },
+                    ],
+                  },
+                ].map((grp, gIdx) => (
+                  <div key={gIdx} className="space-y-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 block">
+                      {grp.group}
+                    </span>
+                    <div className="space-y-1">
+                      {grp.items.map((item) => {
+                        const Icon = item.icon;
+                        const active = activePane === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              setActivePane(item.id);
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                              active
+                                ? 'bg-brand text-white shadow-md shadow-brand/20 font-black'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <Icon className={`h-4 w-4 ${active ? 'text-white' : 'text-slate-400'}`} />
+                              <span>{item.name}</span>
+                            </div>
+                            {item.count !== undefined && item.count > 0 && (
+                              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                                active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+                              }`}>
+                                {item.count}
+                              </span>
+                            )}
+                            {item.badge && (
+                              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                                active ? 'bg-white/20 text-white' : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
+                              }`}>
+                                {item.badge}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </nav>
+            </div>
+
+            {/* Sidebar Footer: Attendance Quick Punch Widget & Theme Toggle */}
+            <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3 mt-6">
+              <div className="p-3 bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 rounded-2xl flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Flame className="h-5 w-5 text-amber-500 animate-bounce-short" />
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-400 block tracking-wider">Day Streak</span>
+                    <span className="text-xs font-black text-amber-900 dark:text-amber-200">{presentDays} Days</span>
+                  </div>
+                </div>
+                {!isPunchedToday ? (
+                  <button
+                    onClick={handlePunchToday}
+                    className="bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-black px-2.5 py-1.5 rounded-xl shadow-xs transition-all"
+                  >
+                    Punch
+                  </button>
+                ) : (
+                  <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                    <CheckCircle2 className="h-3 w-3" /> Done
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center justify-between px-1">
+                <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Mode</span>
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 transition-colors"
+                >
+                  {theme === 'dark' ? <Sun className="h-3.5 w-3.5 text-amber-400" /> : <Moon className="h-3.5 w-3.5" />}
+                  <span>{theme === 'dark' ? 'Light Theme' : 'Dark Theme'}</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          {/* RIGHT MAIN CONTENT AREA */}
+          <main className="flex-1 min-w-0 w-full space-y-6">
             
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                  Welcome back, {user.name}!
-                </h1>
-                <span className="bg-brand/10 dark:bg-brand/20 text-brand dark:text-blue-400 text-xs font-black uppercase px-2.5 py-0.5 rounded-md border border-brand/20">
-                  Verified Scholar
-                </span>
+            {/* Top Greeting Banner */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+              <div className="flex items-center gap-5">
+                <div className="relative">
+                  <img
+                    src={profileForm.avatar || AVATAR_OPTIONS[0]}
+                    alt={user.name}
+                    className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-brand/20 shadow-md"
+                  />
+                  <span className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 flex items-center justify-center text-[10px] text-white font-bold" title="Online & Active">
+                    ✓
+                  </span>
+                </div>
+                
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                      Welcome back, {user.name}!
+                    </h1>
+                    <span className="bg-brand/10 dark:bg-brand/20 text-brand dark:text-blue-400 text-xs font-black uppercase px-2.5 py-0.5 rounded-md border border-brand/20">
+                      Verified Scholar
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-slate-400" />
+                    {user.college} • {user.branch}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-slate-400" />
-                {user.college} • {user.branch}
-              </p>
-            </div>
-          </div>
 
-          {/* Quick Streak & Punch Badge */}
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="flex items-center gap-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 p-3 rounded-2xl flex-1 md:flex-initial">
-              <div className="h-10 w-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black">
-                <Flame className="h-5 w-5 animate-bounce-short" />
+              {/* Quick Streak & Punch Badge */}
+              <div className="flex items-center gap-3 w-full md:w-auto">
+                <div className="flex items-center gap-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 p-3 rounded-2xl flex-1 md:flex-initial">
+                  <div className="h-10 w-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black">
+                    <Flame className="h-5 w-5 animate-bounce-short" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-400 block tracking-wider">
+                      Active Streak
+                    </span>
+                    <span className="text-sm font-black text-amber-900 dark:text-amber-200">
+                      {presentDays} Days Check-in
+                    </span>
+                  </div>
+                </div>
+
+                {!isPunchedToday ? (
+                  <button
+                    onClick={handlePunchToday}
+                    className="bg-brand hover:bg-brand-dark text-white font-bold px-4 py-3 rounded-2xl text-xs flex items-center gap-2 shadow-md shadow-brand/20 transition-all transform hover:scale-105"
+                  >
+                    <Check className="h-4 w-4" />
+                    Punch In Today
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-4 py-3 rounded-2xl text-xs font-black">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    Attended Today
+                  </div>
+                )}
               </div>
-              <div>
-                <span className="text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-400 block tracking-wider">
-                  Active Streak
-                </span>
-                <span className="text-sm font-black text-amber-900 dark:text-amber-200">
-                  {presentDays} Days Check-in
-                </span>
+            </div>
+
+            {/* 4 CORE KPI METRIC CARDS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-brand dark:text-blue-400 flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="h-6 w-6" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
+                    Enrolled Programs
+                  </span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-white">
+                    {enrolled.length}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
+                  <Calendar className="h-6 w-6" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
+                    Attendance Ratio
+                  </span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-white">
+                    {attendanceRate}%
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0">
+                  <Award className="h-6 w-6" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
+                    ISO Certificates
+                  </span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-white">
+                    {enrolled.filter((c) => (courseProgress[c._id || c] || 0) === 100).length}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
+                <div className="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
+                  <Briefcase className="h-6 w-6" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
+                    Internship Applications
+                  </span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-white">
+                    {myApplications?.length || 0}
+                  </span>
+                </div>
               </div>
             </div>
 
-            {!isPunchedToday ? (
-              <button
-                onClick={handlePunchToday}
-                className="bg-brand hover:bg-brand-dark text-white font-bold px-4 py-3 rounded-2xl text-xs flex items-center gap-2 shadow-md shadow-brand/20 transition-all transform hover:scale-105"
-              >
-                <Check className="h-4 w-4" />
-                Punch In Today
-              </button>
-            ) : (
-              <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 px-4 py-3 rounded-2xl text-xs font-black">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                Attended Today
-              </div>
-            )}
-          </div>
-        </div>
+            {/* TAB 1: OVERVIEW & ANALYTICS */}
+            {activePane === 'overview' && (
+              <div className="space-y-6">
 
-        {/* 4 CORE KPI METRIC CARDS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-brand dark:text-blue-400 flex items-center justify-center flex-shrink-0">
-              <BookOpen className="h-6 w-6" />
-            </div>
-            <div>
-              <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
-                Enrolled Programs
-              </span>
-              <span className="text-2xl font-black text-slate-900 dark:text-white">
-                {enrolled.length}
-              </span>
-            </div>
-          </div>
+                {/* VISUAL ANALYTICS SUITE: PIE DIAGRAM + WEEKLY BAR GRAPH */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-          <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
-              <Calendar className="h-6 w-6" />
-            </div>
-            <div>
-              <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
-                Attendance Ratio
-              </span>
-              <span className="text-2xl font-black text-slate-900 dark:text-white">
-                {attendanceRate}%
-              </span>
-            </div>
-          </div>
+                  {/* 1. PIE DIAGRAM (DONUT CHART) - 5 COLS */}
+                  <div className="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-7 shadow-sm space-y-6 flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg flex items-center gap-2">
+                          <PieChart className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                          Curriculum Domain Distribution
+                        </h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                          Breakdown of accredited competencies & modules
+                        </p>
+                      </div>
+                      <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        ISO Verified
+                      </span>
+                    </div>
 
-          <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0">
-              <Award className="h-6 w-6" />
-            </div>
-            <div>
-              <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
-                ISO Certificates
-              </span>
-              <span className="text-2xl font-black text-slate-900 dark:text-white">
-                {enrolled.filter((c) => (courseProgress[c._id || c] || 0) === 100).length}
-              </span>
-            </div>
-          </div>
+                    {/* Donut Chart SVG + Centered Badge */}
+                    <div className="relative flex items-center justify-center my-2">
+                      <svg className="w-52 h-52 transform -rotate-90" viewBox="0 0 200 200">
+                        <circle
+                          cx="100"
+                          cy="100"
+                          r="70"
+                          className="stroke-slate-100 dark:stroke-slate-800 fill-none"
+                          strokeWidth="24"
+                        />
+                        {/* Slice 1: Full-Stack (40%) */}
+                        <circle
+                          cx="100"
+                          cy="100"
+                          r="70"
+                          className="fill-none transition-all duration-300 hover:opacity-85 cursor-pointer"
+                          stroke="#4f46e5"
+                          strokeWidth={activeDomainHover === 0 ? "28" : "24"}
+                          strokeDasharray="175.93 439.82"
+                          strokeDashoffset="0"
+                          strokeLinecap="round"
+                          onMouseEnter={() => setActiveDomainHover(0)}
+                          onMouseLeave={() => setActiveDomainHover(null)}
+                        />
+                        {/* Slice 2: AI & ML (25%) */}
+                        <circle
+                          cx="100"
+                          cy="100"
+                          r="70"
+                          className="fill-none transition-all duration-300 hover:opacity-85 cursor-pointer"
+                          stroke="#8b5cf6"
+                          strokeWidth={activeDomainHover === 1 ? "28" : "24"}
+                          strokeDasharray="109.95 439.82"
+                          strokeDashoffset="-175.93"
+                          strokeLinecap="round"
+                          onMouseEnter={() => setActiveDomainHover(1)}
+                          onMouseLeave={() => setActiveDomainHover(null)}
+                        />
+                        {/* Slice 3: Cloud DevOps (20%) */}
+                        <circle
+                          cx="100"
+                          cy="100"
+                          r="70"
+                          className="fill-none transition-all duration-300 hover:opacity-85 cursor-pointer"
+                          stroke="#10b981"
+                          strokeWidth={activeDomainHover === 2 ? "28" : "24"}
+                          strokeDasharray="87.96 439.82"
+                          strokeDashoffset="-285.88"
+                          strokeLinecap="round"
+                          onMouseEnter={() => setActiveDomainHover(2)}
+                          onMouseLeave={() => setActiveDomainHover(null)}
+                        />
+                        {/* Slice 4: Database (15%) */}
+                        <circle
+                          cx="100"
+                          cy="100"
+                          r="70"
+                          className="fill-none transition-all duration-300 hover:opacity-85 cursor-pointer"
+                          stroke="#f59e0b"
+                          strokeWidth={activeDomainHover === 3 ? "28" : "24"}
+                          strokeDasharray="65.97 439.82"
+                          strokeDashoffset="-373.84"
+                          strokeLinecap="round"
+                          onMouseEnter={() => setActiveDomainHover(3)}
+                          onMouseLeave={() => setActiveDomainHover(null)}
+                        />
+                      </svg>
 
-          <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
-              <Briefcase className="h-6 w-6" />
-            </div>
-            <div>
-              <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-500 block tracking-wider">
-                Internship Applications
-              </span>
-              <span className="text-2xl font-black text-slate-900 dark:text-white">
-                {myApplications?.length || 0}
-              </span>
-            </div>
-          </div>
-        </div>
+                      {/* Donut Center Display */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <span className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                          {activeDomainHover !== null ? `${domainDistribution[activeDomainHover].percentage}%` : '100%'}
+                        </span>
+                        <span className="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+                          {activeDomainHover !== null ? domainDistribution[activeDomainHover].badge : 'Curriculum'}
+                        </span>
+                      </div>
+                    </div>
 
-        {/* NAVIGATION TABS HEADER */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-2xl px-2 p-1.5 shadow-xs overflow-x-auto gap-1">
-          {[
-            { id: 'overview', name: 'Overview', icon: LayoutDashboard },
-            { id: 'courses', name: `My Courses (${enrolled.length})`, icon: BookOpen },
-            { id: 'attendance', name: 'Attendance', icon: Calendar },
-            { id: 'progress', name: 'Learning Progress', icon: TrendingUp },
-            { id: 'certificates', name: 'Certificates', icon: Award },
-            { id: 'payments', name: 'Payments & Billing', icon: CreditCard },
-            { id: 'applications', name: `Internships (${myApplications?.length || 0})`, icon: Briefcase },
-            { id: 'profile', name: 'Edit Profile', icon: User },
-            { id: 'settings', name: 'Settings', icon: Settings },
-            { id: 'help', name: 'Help Desk', icon: HelpCircle },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const active = activePane === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActivePane(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                  active
-                    ? 'bg-brand text-white shadow-md'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {tab.name}
-              </button>
-            );
-          })}
-        </div>
+                    {/* Domain Breakdown Legend */}
+                    <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                      {domainDistribution.map((dom, dIdx) => (
+                        <div
+                          key={dIdx}
+                          onMouseEnter={() => setActiveDomainHover(dIdx)}
+                          onMouseLeave={() => setActiveDomainHover(null)}
+                          className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
+                            activeDomainHover === dIdx
+                              ? 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 scale-[1.02]'
+                              : 'bg-slate-50/60 dark:bg-slate-800/40 border-slate-200/80 dark:border-slate-700/80'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: dom.color }} />
+                              <span className="text-[11px] font-extrabold text-slate-800 dark:text-slate-200 truncate">
+                                {dom.name.split(' ')[0]}
+                              </span>
+                            </div>
+                            <span className="text-xs font-black" style={{ color: dom.color }}>
+                              {dom.percentage}%
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 font-semibold block">{dom.hours} Logged</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-        {/* TAB 1: OVERVIEW */}
-        {activePane === 'overview' && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* Left 2 Cols: Active Learning Track */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
-                  <div className="flex justify-between items-center">
+                  {/* 2. WEEKLY LEARNING ACTIVITY BAR GRAPH - 7 COLS */}
+                  <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-7 shadow-sm space-y-6 flex flex-col justify-between">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                      <div>
+                        <h3 className="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg flex items-center gap-2">
+                          <BarChart3 className="h-5 w-5 text-brand dark:text-blue-400" />
+                          Weekly Study & Lab Activity
+                        </h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                          Daily active hours spent on code exercises & lecture modules
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/60 px-2.5 py-1 rounded-xl">
+                          +18% vs last week
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Metric Highlights Strip */}
+                    <div className="grid grid-cols-3 gap-3 p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 text-center">
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-slate-400 block">Total Weekly</span>
+                        <span className="text-base font-black text-brand dark:text-blue-400">{totalWeeklyHours} hrs</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-slate-400 block">Daily Average</span>
+                        <span className="text-base font-black text-slate-900 dark:text-white">{avgDailyHours} hrs/day</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase text-slate-400 block">Weekly Target</span>
+                        <span className="text-base font-black text-emerald-600 dark:text-emerald-400">123% Met</span>
+                      </div>
+                    </div>
+
+                    {/* Bar Chart Visual */}
+                    <div className="pt-2">
+                      <div className="h-44 flex items-end justify-between gap-2 sm:gap-4 px-2">
+                        {weeklyHoursData.map((d, idx) => {
+                          const isHovered = hoveredDay === idx;
+                          const barHeightPercent = Math.min(100, Math.round((d.hours / 10) * 100));
+                          return (
+                            <div
+                              key={idx}
+                              className="flex-1 flex flex-col items-center gap-2 group relative"
+                              onMouseEnter={() => setHoveredDay(idx)}
+                              onMouseLeave={() => setHoveredDay(null)}
+                            >
+                              {/* Tooltip on Hover */}
+                              {isHovered && (
+                                <div className="absolute -top-10 bg-slate-900 text-white text-[10px] font-black px-2 py-1 rounded-md shadow-lg whitespace-nowrap z-20 animate-fadeIn pointer-events-none">
+                                  {d.hours} hrs • {d.lessons} lessons
+                                </div>
+                              )}
+
+                              {/* Bar Column Track */}
+                              <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-2xl h-36 flex items-end p-1 relative overflow-hidden">
+                                <div
+                                  className={`w-full rounded-xl transition-all duration-500 ${
+                                    isHovered
+                                      ? 'bg-gradient-to-t from-brand to-indigo-400 shadow-md scale-[1.03]'
+                                      : 'bg-gradient-to-t from-brand/80 to-blue-500'
+                                  }`}
+                                  style={{ height: `${barHeightPercent}%` }}
+                                />
+                              </div>
+
+                              {/* Day Label */}
+                              <span className={`text-[11px] font-extrabold transition-colors ${
+                                isHovered ? 'text-brand dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'
+                              }`}>
+                                {d.day}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. MONTHLY ATTENDANCE CONSISTENCY TREND GRAPH */}
+                <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-7 shadow-sm space-y-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-4">
                     <div>
-                      <h3 className="font-extrabold text-slate-900 dark:text-white text-lg">
-                        Continue Learning Curriculum
+                      <h3 className="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg flex items-center gap-2">
+                        <Activity className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                        Attendance & Engagement Consistency Trend
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
-                        Pick up directly where you left off in your industrial modules
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                        Weekly classroom punctuality and check-in rate over the active semester term
                       </p>
                     </div>
-                    <button
-                      onClick={() => setActivePane('courses')}
-                      className="text-xs font-bold text-brand dark:text-blue-400 hover:underline"
-                    >
-                      View All Courses →
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800/60">
+                        Current: {attendanceRate}% Overall
+                      </span>
+                    </div>
                   </div>
+
+                  {/* Smooth SVG Area Graph */}
+                  <div className="pt-2">
+                    <div className="relative w-full h-32">
+                      <svg className="w-full h-full overflow-visible" viewBox="0 0 600 120" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id="attendanceGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                          </linearGradient>
+                        </defs>
+
+                        {/* Shaded Area Under Curve */}
+                        <path
+                          d="M 50 75 Q 150 35 250 55 T 450 20 T 550 15 L 550 120 L 50 120 Z"
+                          fill="url(#attendanceGradient)"
+                        />
+
+                        {/* Stroke Curve */}
+                        <path
+                          d="M 50 75 Q 150 35 250 55 T 450 20 T 550 15"
+                          fill="none"
+                          stroke="#10b981"
+                          strokeWidth="3.5"
+                          strokeLinecap="round"
+                        />
+
+                        {/* Data Points */}
+                        {[
+                          { cx: 50, cy: 75, val: '85%' },
+                          { cx: 150, cy: 45, val: '92%' },
+                          { cx: 250, cy: 55, val: '88%' },
+                          { cx: 350, cy: 30, val: '96%' },
+                          { cx: 450, cy: 22, val: '94%' },
+                          { cx: 550, cy: 15, val: '98%' },
+                        ].map((pt, pIdx) => (
+                          <g key={pIdx} className="group cursor-pointer">
+                            <circle cx={pt.cx} cy={pt.cy} r="5" fill="#10b981" className="stroke-white dark:stroke-slate-900 stroke-2" />
+                            <text x={pt.cx} y={pt.cy - 10} textAnchor="middle" className="text-[10px] font-black fill-slate-700 dark:fill-slate-200">
+                              {pt.val}
+                            </text>
+                          </g>
+                        ))}
+                      </svg>
+                    </div>
+
+                    {/* Week Axis */}
+                    <div className="flex justify-between text-[11px] font-extrabold text-slate-400 dark:text-slate-500 pt-2 px-6">
+                      {attendanceTrendData.map((w, wIdx) => (
+                        <span key={wIdx}>{w.week}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  
+                  {/* Left 2 Cols: Active Learning Track */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="font-extrabold text-slate-900 dark:text-white text-lg">
+                            Continue Learning Curriculum
+                          </h3>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
+                            Pick up directly where you left off in your industrial modules
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => setActivePane('courses')}
+                          className="text-xs font-bold text-brand dark:text-blue-400 hover:underline"
+                        >
+                          View All Courses →
+                        </button>
+                      </div>
 
                   {enrolled.length === 0 ? (
                     <div className="text-center py-10 space-y-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
@@ -1664,6 +2153,8 @@ const StudentDashboard = () => {
           </div>
         )}
 
+          </main>
+        </div>
       </div>
 
       {/* MODAL 1: CERTIFICATE MODAL */}
