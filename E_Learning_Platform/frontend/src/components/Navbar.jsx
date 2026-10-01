@@ -164,13 +164,6 @@ const Navbar = () => {
                 {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
               </button>
               <button
-                onClick={() => setDemoModalOpen(true)}
-                className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-brand dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700"
-                title="Manage Live & Demo Data"
-              >
-                <Database className="h-4 w-4 text-brand dark:text-blue-400" />
-              </button>
-              <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-slate-700 dark:text-slate-200 p-2.5 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
