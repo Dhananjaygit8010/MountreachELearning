@@ -17,7 +17,16 @@ import {
   Play,
   Code2,
   Layers,
-  Laptop
+  Laptop,
+  Calculator,
+  TrendingUp,
+  MapPin,
+  Flame,
+  Zap,
+  GraduationCap,
+  X as CloseIcon,
+  Clock,
+  ExternalLink
 } from 'lucide-react';
 import RippleDistortion from '../components/RippleDistortion';
 import GlareHover from '../components/CardHoverAnim';
@@ -27,6 +36,116 @@ const LandingPage = () => {
   const [activeTab, setActiveTab] = useState('industrial');
   const [activeCodeTab, setActiveCodeTab] = useState('react');
   const [openFaq, setOpenFaq] = useState(0);
+
+  // Live Student Enrollment Activity Ticker
+  const enrollmentNotifications = [
+    { student: 'Aarav Sharma', location: 'Pune', action: 'enrolled in', item: 'Fullstack Web Development', time: '2 mins ago', badge: 'Certified' },
+    { student: 'Priya Kulkarni', location: 'Nagpur', action: 'claimed ISO Certificate for', item: 'AI & Machine Learning Lab', time: '5 mins ago', badge: 'ISO 9001' },
+    { student: 'Rohan Deshmukh', location: 'Mumbai', action: 'secured paid internship at', item: 'Mountreach Cloud DevOps', time: '8 mins ago', badge: '₹12k/mo' },
+    { student: 'Sneha Patil', location: 'Kolhapur', action: 'enrolled in', item: 'Android Kotlin Architecture', time: '11 mins ago', badge: 'Verified' },
+    { student: 'Aniket Verma', location: 'Nashik', action: 'punched day 14 attendance streak in', item: 'Data Science & PyTorch', time: '14 mins ago', badge: 'Streak' },
+  ];
+  const [currentNotifIndex, setCurrentNotifIndex] = useState(0);
+  const [showNotification, setShowNotification] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentNotifIndex((prev) => (prev + 1) % enrollmentNotifications.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Career ROI & Stipend Calculator State
+  const [calcTrack, setCalcTrack] = useState('fullstack');
+  const [calcYear, setCalcYear] = useState('final');
+
+  const tracksData = {
+    fullstack: {
+      name: 'Fullstack MERN & Cloud',
+      avgSalary: '₹7.5 - 14.5 LPA',
+      stipend: '₹10,000 - 16,000/mo',
+      hiringCompanies: 'Cognizant, TCS, L&T, Tech Startups',
+      timeToOffer: '8 Weeks',
+      badge: 'High Demand',
+    },
+    ai: {
+      name: 'AI, ML & Computer Vision',
+      avgSalary: '₹9.0 - 18.0 LPA',
+      stipend: '₹12,000 - 20,000/mo',
+      hiringCompanies: 'IBM, Oracle, Nvidia Ecosystem',
+      timeToOffer: '10 Weeks',
+      badge: 'Exponential Growth',
+    },
+    cloud: {
+      name: 'Cloud DevOps & Kubernetes',
+      avgSalary: '₹8.0 - 16.0 LPA',
+      stipend: '₹11,000 - 18,000/mo',
+      hiringCompanies: 'AWS Partners, Tech Mahindra, Wipro',
+      timeToOffer: '7 Weeks',
+      badge: 'Enterprise Core',
+    },
+    android: {
+      name: 'Android Kotlin & Jetpack',
+      avgSalary: '₹6.5 - 12.0 LPA',
+      stipend: '₹9,000 - 14,000/mo',
+      hiringCompanies: 'Swiggy, PhonePe, Product Ecosystems',
+      timeToOffer: '8 Weeks',
+      badge: 'Mobile Scale',
+    },
+  };
+
+  // 6-Stage Interactive Roadmap State
+  const [activeRoadmapStep, setActiveRoadmapStep] = useState(0);
+  const roadmapSteps = [
+    {
+      step: '01',
+      title: 'Foundation & Production Git',
+      subtitle: 'Code hygiene, CI/CD branching & industry workflows',
+      deliverables: ['Clean Git trunk-based branching', 'ES6+ & TypeScript clean code', 'REST API Contracts & Postman'],
+      duration: 'Weeks 1-2',
+      badge: 'Level 1',
+    },
+    {
+      step: '02',
+      title: 'Fullstack Systems & Microservices',
+      subtitle: 'Scalable backends, MongoDB aggregation, JWT RBAC',
+      deliverables: ['Production Mongo Indexing', 'Role-Based Access Control', 'Cloudinary CDN pipeline'],
+      duration: 'Weeks 3-4',
+      badge: 'Level 2',
+    },
+    {
+      step: '03',
+      title: 'Real-Time WebSockets & Deployments',
+      subtitle: 'High-availability services, Docker, Vercel & Render',
+      deliverables: ['Vercel + Render CI/CD', 'Real-time WebSocket events', 'Environment secrets security'],
+      duration: 'Weeks 5-6',
+      badge: 'Level 3',
+    },
+    {
+      step: '04',
+      title: 'Corporate Paid Internship',
+      subtitle: 'Live client project sprints & corporate code reviews',
+      deliverables: ['Active client repo commits', 'Weekly sprint standups', 'Monthly performance stipend'],
+      duration: 'Months 2-3',
+      badge: 'Work Experience',
+    },
+    {
+      step: '05',
+      title: 'ISO 9001:2015 Accreditation',
+      subtitle: 'Verifiable credential ID, QR validation, LinkedIn sync',
+      deliverables: ['Official seal & QR link', 'Permanent cloud verification', 'Academic credit eligibility'],
+      duration: 'Milestone',
+      badge: 'Accreditation',
+    },
+    {
+      step: '06',
+      title: 'Hiring Pipeline & Placement',
+      subtitle: 'Technical interview mocks, ATS resume, corporate referrals',
+      deliverables: ['Direct IT company referrals', 'Corporate recommendation letter', '100% placement support'],
+      duration: 'Placement Phase',
+      badge: 'Career Launch',
+    },
+  ];
 
   // Smooth counter animation
   const [stats, setStats] = useState({ students: 0, partners: 0, placements: 0 });
@@ -627,6 +746,266 @@ class TaskRepository @Inject constructor(
         </div>
       </section>
 
+      {/* 6-Stage Corporate Engineering Roadmap */}
+      <section className="py-20 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200/80 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span className="text-brand dark:text-blue-400 font-extrabold text-xs uppercase tracking-widest bg-brand-accent dark:bg-blue-950/60 px-3.5 py-1.5 rounded-full border border-brand/20 dark:border-blue-500/20">
+              Structured Industry Journey
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              From College Classroom to Corporate Production in 6 Milestones
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">
+              A battle-tested progression engineered with senior tech leads to transform academic engineers into enterprise-ready architects.
+            </p>
+          </div>
+
+          {/* Stepper Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
+            {roadmapSteps.map((step, idx) => {
+              const isActive = activeRoadmapStep === idx;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveRoadmapStep(idx)}
+                  className={`p-4 rounded-2xl border text-left transition-all duration-200 ${
+                    isActive
+                      ? 'bg-brand text-white border-brand shadow-lg shadow-brand/20 scale-[1.02]'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand/40 dark:hover:border-blue-500/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`text-xs font-black px-2 py-0.5 rounded-md ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                    }`}>
+                      {step.step}
+                    </span>
+                    <span className={`text-[10px] font-extrabold uppercase ${
+                      isActive ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'
+                    }`}>
+                      {step.duration}
+                    </span>
+                  </div>
+                  <h4 className={`text-xs font-black line-clamp-1 ${
+                    isActive ? 'text-white' : 'text-slate-900 dark:text-white'
+                  }`}>
+                    {step.title}
+                  </h4>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Step Showcase Card */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-4 max-w-2xl">
+                <div className="inline-flex items-center gap-2 bg-brand/10 dark:bg-blue-950/60 text-brand dark:text-blue-400 border border-brand/20 dark:border-blue-500/20 px-3 py-1 rounded-full text-xs font-black uppercase">
+                  <span>Milestone {roadmapSteps[activeRoadmapStep].step}</span>
+                  <span>•</span>
+                  <span>{roadmapSteps[activeRoadmapStep].badge}</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+                  {roadmapSteps[activeRoadmapStep].title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 font-medium text-base">
+                  {roadmapSteps[activeRoadmapStep].subtitle}
+                </p>
+
+                <div className="space-y-2 pt-2">
+                  <span className="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 block">
+                    Enterprise Deliverables & Outcomes:
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {roadmapSteps[activeRoadmapStep].deliverables.map((del, dIdx) => (
+                      <div
+                        key={dIdx}
+                        className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 text-xs font-bold text-slate-800 dark:text-slate-200"
+                      >
+                        <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                        <span>{del}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:border-l lg:border-slate-100 dark:lg:border-slate-800 lg:pl-8 flex flex-col justify-center items-start space-y-4 min-w-[260px]">
+                <div className="p-4 bg-blue-50/50 dark:bg-slate-800/80 rounded-2xl border border-blue-100/60 dark:border-slate-700 w-full space-y-1">
+                  <span className="text-[11px] font-extrabold uppercase text-slate-400 dark:text-slate-400 block">
+                    Target Execution
+                  </span>
+                  <span className="text-lg font-black text-brand dark:text-blue-400">
+                    {roadmapSteps[activeRoadmapStep].duration}
+                  </span>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                    Verified through automated code assessments & live architect reviews.
+                  </p>
+                </div>
+                <button
+                  onClick={() => navigate('/courses')}
+                  className="w-full bg-brand hover:bg-brand-dark text-white font-extrabold py-3 px-5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <span>Start This Track</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Career ROI & Internship Stipend Calculator */}
+      <section className="py-20 bg-white dark:bg-[#0b0f19]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span className="text-indigo-600 dark:text-indigo-400 font-extrabold text-xs uppercase tracking-widest bg-indigo-50 dark:bg-indigo-950/60 px-3.5 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/20">
+              Interactive ROI Estimator
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              Estimate Your Career Potential & Internship Stipend
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">
+              Select your target technical specialization and academic background to simulate potential starting compensation and corporate internship stipends.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900 dark:to-slate-950 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Controls Column */}
+              <div className="lg:col-span-7 space-y-6">
+                {/* Select Technical Specialization */}
+                <div className="space-y-3">
+                  <label className="text-xs font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider flex items-center gap-1.5">
+                    <Laptop className="h-4 w-4 text-brand dark:text-blue-400" />
+                    1. Select Technical Track
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {Object.keys(tracksData).map((trackKey) => {
+                      const t = tracksData[trackKey];
+                      const isSelected = calcTrack === trackKey;
+                      return (
+                        <button
+                          key={trackKey}
+                          onClick={() => setCalcTrack(trackKey)}
+                          className={`p-3.5 rounded-2xl border text-left transition-all ${
+                            isSelected
+                              ? 'bg-brand text-white border-brand shadow-md shadow-brand/20'
+                              : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-brand/40'
+                          }`}
+                        >
+                          <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md inline-block mb-1 ${
+                            isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-700 text-brand dark:text-blue-400'
+                          }`}>
+                            {t.badge}
+                          </span>
+                          <h4 className="text-xs sm:text-sm font-black line-clamp-1">{t.name}</h4>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Academic Status */}
+                <div className="space-y-3">
+                  <label className="text-xs font-black uppercase text-slate-500 dark:text-slate-400 tracking-wider flex items-center gap-1.5">
+                    <GraduationCap className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                    2. Academic Year / Diploma
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { key: 'pre', label: '2nd / 3rd Year', note: 'Early Fast-Track' },
+                      { key: 'final', label: 'Final Year B.Tech', note: 'Placement Prime' },
+                      { key: 'diploma', label: 'Polytechnic Diploma', note: 'Industrial Direct' },
+                    ].map((y) => {
+                      const isSelected = calcYear === y.key;
+                      return (
+                        <button
+                          key={y.key}
+                          onClick={() => setCalcYear(y.key)}
+                          className={`p-3 rounded-2xl border text-center transition-all ${
+                            isSelected
+                              ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
+                              : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
+                          }`}
+                        >
+                          <span className="text-xs font-black block">{y.label}</span>
+                          <span className="text-[10px] opacity-75 font-semibold block">{y.note}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Dynamic Projection Result Card */}
+              <div className="lg:col-span-5">
+                <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl space-y-6 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 dark:bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Mountreach Projected ROI
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
+                      <Flame className="h-3 w-3" /> ISO Verified
+                    </span>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                        Projected Starting Salary (CTC)
+                      </span>
+                      <div className="text-3xl font-black text-slate-900 dark:text-white mt-0.5">
+                        {tracksData[calcTrack].avgSalary}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+                      <div>
+                        <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                          Internship Stipend
+                        </span>
+                        <span className="text-base font-black text-brand dark:text-blue-400">
+                          {tracksData[calcTrack].stipend}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                          Avg. Placement Time
+                        </span>
+                        <span className="text-base font-black text-indigo-600 dark:text-indigo-400">
+                          {tracksData[calcTrack].timeToOffer}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                      <span className="text-[10px] font-extrabold uppercase text-slate-400 dark:text-slate-400 block">
+                        Typical Corporate Recruiters
+                      </span>
+                      <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                        {tracksData[calcTrack].hiringCompanies}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => navigate('/courses')}
+                    className="w-full bg-gradient-to-r from-brand to-indigo-600 hover:from-brand-dark hover:to-brand text-white font-extrabold py-3.5 px-6 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand/20 transition-all"
+                  >
+                    <span>Claim Your Fast-Track Seat</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Student Testimonials Grid */}
       <section className="py-20 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -751,6 +1130,51 @@ class TaskRepository @Inject constructor(
           </div>
         </div>
       </section>
+
+      {/* Real-Time Floating Student Activity Ticker */}
+      {showNotification && (
+        <div className="fixed bottom-6 left-6 z-50 max-w-sm w-full transition-all duration-300">
+          <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 shadow-2xl flex items-center gap-3 relative">
+            <button
+              onClick={() => setShowNotification(false)}
+              className="absolute top-2 right-2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-md transition-colors"
+              title="Dismiss"
+            >
+              <CloseIcon className="h-3.5 w-3.5" />
+            </button>
+
+            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-brand to-indigo-600 text-white font-black text-sm flex items-center justify-center flex-shrink-0 shadow-md">
+              {enrollmentNotifications[currentNotifIndex].student.charAt(0)}
+            </div>
+
+            <div className="pr-4 space-y-0.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-xs font-black text-slate-900 dark:text-white">
+                  {enrollmentNotifications[currentNotifIndex].student}
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold flex items-center gap-0.5">
+                  <MapPin className="h-2.5 w-2.5" />
+                  {enrollmentNotifications[currentNotifIndex].location}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 font-medium leading-tight">
+                {enrollmentNotifications[currentNotifIndex].action}{' '}
+                <span className="font-bold text-brand dark:text-blue-400">
+                  {enrollmentNotifications[currentNotifIndex].item}
+                </span>
+              </p>
+              <div className="flex items-center gap-2 pt-0.5">
+                <span className="text-[9px] text-slate-400 dark:text-slate-500 font-semibold">
+                  {enrollmentNotifications[currentNotifIndex].time}
+                </span>
+                <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-brand/10 dark:bg-blue-950/60 text-brand dark:text-blue-400 border border-brand/20 dark:border-blue-500/20">
+                  {enrollmentNotifications[currentNotifIndex].badge}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

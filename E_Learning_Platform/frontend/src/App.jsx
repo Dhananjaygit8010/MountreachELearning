@@ -16,6 +16,9 @@ import InternshipHub from './pages/InternshipHub';
 import StudentDashboard from './pages/StudentDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AuthPage from './pages/AuthPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import RefundPolicy from './pages/RefundPolicy';
 
 function App() {
   return (
@@ -37,6 +40,9 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/login" element={<AuthPage defaultIsLogin={true} />} />
               <Route path="/register" element={<AuthPage defaultIsLogin={false} />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsOfService />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
               {/* Fallback routing */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

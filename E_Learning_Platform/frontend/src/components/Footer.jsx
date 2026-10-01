@@ -108,10 +108,10 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} Mountreach Solution Private Limited. All rights reserved.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-slate-300">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-300">Terms of Service</a>
-            <a href="#" className="hover:text-slate-300">Verify Credentials</a>
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            <Link to="/privacy-policy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
+            <Link to="/refund-policy" className="hover:text-slate-300 transition-colors">Refund Guarantee</Link>
           </div>
         </div>
       </div>

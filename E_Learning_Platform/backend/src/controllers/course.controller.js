@@ -69,12 +69,39 @@ const enrollCourse = async (req, res, next) => {
 
     // Enroll user
     user.enrolledCourses.push(courseId);
+
+    // Record official payment & invoice transaction
+    if (!user.payments) user.payments = [];
+    user.payments.unshift({
+      transactionId: `TXN-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`,
+      courseTitle: course.title,
+      courseId: course._id,
+      amount: course.price,
+      date: new Date(),
+      status: 'Captured',
+      invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
+      paymentMethod: 'UPI / Online Card Authorization',
+    });
+
+    // Initialize course progress
+    if (!user.learningProgress) user.learningProgress = [];
+    const existingProg = user.learningProgress.find((p) => p.courseId?.toString() === courseId.toString());
+    if (!existingProg) {
+      user.learningProgress.push({
+        courseId: course._id,
+        completedLessons: [],
+        progressPercent: 0,
+        lastAccessed: new Date(),
+      });
+    }
+
     await user.save();
 
-    const populatedUser = await User.findById(req.user._id).populate('enrolledCourses');
+    const populatedUser = await User.findById(req.user._id).populate('enrolledCourses').select('-password');
 
     res.status(200).json({
-      message: 'Successfully enrolled in course.',
+      message: 'Successfully enrolled in course. Payment receipt generated.',
+      user: populatedUser,
       enrolledCourses: populatedUser.enrolledCourses,
     });
   } catch (error) {

@@ -35,10 +35,83 @@ const userSchema = new mongoose.Schema(
       enum: ['student', 'instructor', 'admin'],
       default: 'student',
     },
+    phone: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    avatar: {
+      type: String,
+      default: '',
+    },
+    bio: {
+      type: String,
+      default: '',
+    },
+    semester: {
+      type: String,
+      default: 'Semester 6',
+    },
+    graduationYear: {
+      type: String,
+      default: '2026',
+    },
+    rollNumber: {
+      type: String,
+      default: '',
+    },
+    githubUrl: {
+      type: String,
+      default: '',
+    },
+    linkedinUrl: {
+      type: String,
+      default: '',
+    },
     enrolledCourses: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
+      },
+    ],
+    attendance: [
+      {
+        date: { type: String },
+        timestamp: { type: Date, default: Date.now },
+        status: { type: String, default: 'Present' },
+        sessionName: { type: String, default: 'Industrial Tech Session' },
+        mode: { type: String, default: 'Online' },
+      },
+    ],
+    learningProgress: [
+      {
+        courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+        completedLessons: [{ type: String }],
+        progressPercent: { type: Number, default: 0 },
+        lastAccessed: { type: Date, default: Date.now },
+      },
+    ],
+    payments: [
+      {
+        transactionId: { type: String },
+        courseTitle: { type: String },
+        courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+        amount: { type: Number },
+        date: { type: Date, default: Date.now },
+        status: { type: String, default: 'Captured' },
+        invoiceNumber: { type: String },
+        paymentMethod: { type: String, default: 'UPI / Online Card' },
+      },
+    ],
+    supportTickets: [
+      {
+        ticketId: { type: String },
+        subject: { type: String },
+        category: { type: String },
+        priority: { type: String, default: 'Medium' },
+        status: { type: String, default: 'Open' },
+        description: { type: String },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
   },

@@ -91,18 +91,55 @@ export const AuthProvider = ({ children }) => {
     showToast('Logged out successfully.', 'info');
   };
 
-  const updateProfile = async (name, college, branch, password) => {
+  const updateProfile = async (dataOrName, college, branch, password) => {
     try {
-      const body = { name, college, branch };
-      if (password) body.password = password;
+      let body = {};
+      if (typeof dataOrName === 'object' && dataOrName !== null) {
+        body = { ...dataOrName };
+      } else {
+        body = { name: dataOrName, college, branch };
+        if (password) body.password = password;
+      }
 
       const response = await api.put('/auth/update', body);
       localStorage.setItem('token', response.data.token);
       setUser(response.data);
-      showToast('Profile settings updated successfully!', 'success');
-      return { success: true };
+      showToast('Profile updated successfully!', 'success');
+      return { success: true, user: response.data };
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Failed to update profile settings.';
+      showToast(errMsg, 'error');
+      return { success: false, error: errMsg };
+    }
+  };
+
+  const punchAttendance = async (sessionName = 'Industrial Systems & Architecture Lab', mode = 'Online') => {
+    try {
+      const response = await api.post('/auth/attendance/punch', { sessionName, mode });
+      setUser((prev) => ({
+        ...prev,
+        attendance: response.data.attendance,
+      }));
+      showToast(response.data.message || 'Attendance checked in successfully!', 'success');
+      return { success: true, attendance: response.data.attendance };
+    } catch (error) {
+      const errMsg = error.response?.data?.message || 'Attendance check-in failed.';
+      showToast(errMsg, 'warning');
+      return { success: false, error: errMsg };
+    }
+  };
+
+  const submitSupportTicket = async (ticketData) => {
+    try {
+      const response = await api.post('/auth/support/ticket', ticketData);
+      setUser((prev) => ({
+        ...prev,
+        supportTickets: response.data.supportTickets,
+      }));
+      showToast('Support ticket submitted successfully!', 'success');
+      return { success: true };
+    } catch (error) {
+      const errMsg = error.response?.data?.message || 'Failed to submit support ticket.';
       showToast(errMsg, 'error');
       return { success: false, error: errMsg };
     }
@@ -116,12 +153,15 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const response = await api.post(`/courses/${courseId}/enroll`);
-      // Update local user state with new enrolled courses list
-      setUser((prev) => ({
-        ...prev,
-        enrolledCourses: response.data.enrolledCourses
-      }));
-      showToast('Enrolled successfully! Course added to dashboard.', 'success');
+      if (response.data.user) {
+        setUser(response.data.user);
+      } else {
+        setUser((prev) => ({
+          ...prev,
+          enrolledCourses: response.data.enrolledCourses,
+        }));
+      }
+      showToast('Enrolled successfully! Course added to dashboard with invoice receipt.', 'success');
       return { success: true };
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Failed to enroll in course.';
@@ -160,6 +200,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         loading,
         myApplications,
         toastMessage,
@@ -169,8 +210,10 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         updateProfile,
+        punchAttendance,
+        submitSupportTicket,
         enrollInCourse,
-        applyForInternship
+        applyForInternship,
       }}
     >
       {children}

@@ -44,14 +44,11 @@ const register = async (req, res, next) => {
     const token = generateToken(user._id);
     setAuthCookie(res, token);
 
+    const userObj = user.toObject();
+    delete userObj.password;
+
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      college: user.college,
-      branch: user.branch,
-      role: user.role,
-      enrolledCourses: user.enrolledCourses || [],
+      ...userObj,
       token,
     });
   } catch (error) {
@@ -81,14 +78,11 @@ const login = async (req, res, next) => {
     const token = generateToken(user._id);
     setAuthCookie(res, token);
 
+    const userObj = user.toObject();
+    delete userObj.password;
+
     res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      college: user.college,
-      branch: user.branch,
-      role: user.role,
-      enrolledCourses: user.enrolledCourses || [],
+      ...userObj,
       token,
     });
   } catch (error) {
@@ -142,29 +136,110 @@ const updateProfile = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    user.name = req.body.name || user.name;
-    user.college = req.body.college || user.college;
-    user.branch = req.body.branch || user.branch;
+    // Standard profile fields
+    if (req.body.name !== undefined) user.name = req.body.name;
+    if (req.body.college !== undefined) user.college = req.body.college;
+    if (req.body.branch !== undefined) user.branch = req.body.branch;
+    if (req.body.phone !== undefined) user.phone = req.body.phone;
+    if (req.body.avatar !== undefined) user.avatar = req.body.avatar;
+    if (req.body.bio !== undefined) user.bio = req.body.bio;
+    if (req.body.semester !== undefined) user.semester = req.body.semester;
+    if (req.body.graduationYear !== undefined) user.graduationYear = req.body.graduationYear;
+    if (req.body.rollNumber !== undefined) user.rollNumber = req.body.rollNumber;
+    if (req.body.githubUrl !== undefined) user.githubUrl = req.body.githubUrl;
+    if (req.body.linkedinUrl !== undefined) user.linkedinUrl = req.body.linkedinUrl;
 
     if (req.body.password && req.body.password.trim().length >= 6) {
       user.password = req.body.password; // Hook will automatically hash it
     }
 
     const updatedUser = await user.save();
-    const populatedUser = await User.findById(updatedUser._id).populate('enrolledCourses');
+    const populatedUser = await User.findById(updatedUser._id).populate('enrolledCourses').select('-password');
 
     const token = generateToken(populatedUser._id);
     setAuthCookie(res, token);
 
     res.json({
-      _id: populatedUser._id,
-      name: populatedUser.name,
-      email: populatedUser.email,
-      college: populatedUser.college,
-      branch: populatedUser.branch,
-      role: populatedUser.role,
-      enrolledCourses: populatedUser.enrolledCourses || [],
+      ...populatedUser.toObject(),
       token,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Punch attendance for today
+// @route   POST /api/auth/attendance/punch
+// @access  Private
+const punchAttendance = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'User not found.' });
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    if (!user.attendance) user.attendance = [];
+
+    const alreadyPunched = user.attendance.some((a) => a.date === todayStr);
+    if (alreadyPunched) {
+      return res.status(400).json({
+        message: 'Attendance already checked in for today!',
+        attendance: user.attendance,
+      });
+    }
+
+    const sessionName = req.body.sessionName || 'Industrial Systems & Architecture Lab';
+    const mode = req.body.mode || 'Online';
+
+    user.attendance.unshift({
+      date: todayStr,
+      timestamp: new Date(),
+      status: 'Present',
+      sessionName,
+      mode,
+    });
+
+    await user.save();
+
+    res.status(200).json({
+      message: 'Attendance successfully checked in for today! 100% daily credit granted.',
+      attendance: user.attendance,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Create support ticket
+// @route   POST /api/auth/support/ticket
+// @access  Private
+const createSupportTicket = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'User not found.' });
+
+    const { subject, category, priority, description } = req.body;
+    if (!subject || !description) {
+      return res.status(400).json({ message: 'Subject and description are required.' });
+    }
+
+    if (!user.supportTickets) user.supportTickets = [];
+
+    const newTicket = {
+      ticketId: `MR-TKT-${Date.now().toString().slice(-6)}`,
+      subject,
+      category: category || 'General Academic',
+      priority: priority || 'Medium',
+      status: 'Open',
+      description,
+      createdAt: new Date(),
+    };
+
+    user.supportTickets.unshift(newTicket);
+    await user.save();
+
+    res.status(201).json({
+      message: 'Support ticket submitted. Support staff will respond shortly.',
+      supportTickets: user.supportTickets,
     });
   } catch (error) {
     next(error);
@@ -177,4 +252,6 @@ module.exports = {
   logout,
   getMe,
   updateProfile,
+  punchAttendance,
+  createSupportTicket,
 };
