@@ -345,6 +345,25 @@ const StudentDashboard = () => {
     showToast('Attendance report CSV downloaded successfully!', 'success');
   };
 
+  // Calculate Profile Completeness %
+  const calcProfileCompleteness = () => {
+    if (!user) return 0;
+    const checks = [
+      user.name,
+      user.email,
+      user.college,
+      user.branch,
+      profileForm.phone || user.phone,
+      profileForm.avatar || user.avatar,
+      profileForm.bio || user.bio,
+      profileForm.rollNumber || user.rollNumber,
+      profileForm.githubUrl || user.githubUrl,
+      profileForm.linkedinUrl || user.linkedinUrl,
+    ];
+    const completed = checks.filter((c) => c && String(c).trim().length > 0).length;
+    return Math.round((completed / checks.length) * 100);
+  };
+
   const enrolled = user.enrolledCourses || [];
 
   return (
